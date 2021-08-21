@@ -29,6 +29,8 @@ OBJS		= kernel/kernel.o lib/syscall.o kernel/start.o kernel/main.o\
 			kernel/clock.o kernel/keyboard.o kernel/tty.o kernel/console.o\
 			kernel/i8259.o kernel/global.o kernel/protect.o kernel/proc.o\
 			kernel/systask.o kernel/hd.o\
+			kernel/game/fivechess.o kernel/game/mine.o kernel/game/pushbox.o kernel/game/2048.o kernel/game/tictactoe.o\
+			kernel/application/math.o kernel/application/calendar.o kernel/application/processmanager.o\
 			lib/printf.o lib/vsprintf.o\
 			lib/kliba.o lib/klib.o lib/string.o lib/misc.o\
 			lib/open.o lib/read.o lib/write.o lib/close.o lib/unlink.o\
@@ -111,6 +113,30 @@ kernel/protect.o: kernel/protect.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 kernel/proc.o: kernel/proc.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/fivechess.o: kernel/game/fivechess.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/mine.o: kernel/game/mine.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/pushbox.o: kernel/game/pushbox.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/2048.o: kernel/game/2048.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/tictactoe.o: kernel/game/tictactoe.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/application/math.o: kernel/application/math.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/application/calendar.o: kernel/application/calendar.c
+	$(CC) $(CFLAGS) -o $@ $<
+	
+kernel/application/processmanager.o: kernel/application/processmanager.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 lib/printf.o: lib/printf.c
