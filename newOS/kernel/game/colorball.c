@@ -361,15 +361,17 @@ int colorBall(fd_stdin)
 		return 0;
 	}
 	atoi(rdbuf, &n);
-	while (n <= 0 || n > 81) 
+	while (n <= 0 || n > 81 || r<1) 
 	{
 		printf("Please input a valid number!Input again\n");
 		printf("Please enter the initial number of pieces in the game(1-81):");
-		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-		{
-			return 0;
-		}
-		atoi(rdbuf, &n);
+		int r = read(fd_stdin, rdbuf, 70);
+	        rdbuf[r] = 0;
+	        if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
+	        {
+		 	return 0;
+	        }
+	atoi(rdbuf, &n);
 	}
 	randomin(n); //随机产生棋子
 	while (1)
@@ -380,8 +382,8 @@ int colorBall(fd_stdin)
 		if (readnumber() == 0)break; //棋盘全满时终止游戏
 
 		printf("input Chess coordinates X:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
+		int r1 = read(fd_stdin, rdbuf, 70);
+		rdbuf[r1] = 0;
 		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
 		{
 			return 0;
@@ -389,8 +391,8 @@ int colorBall(fd_stdin)
 		atoi(rdbuf, &inx);
 
 		printf("input Chess coordinates Y:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
+		int r2 = read(fd_stdin, rdbuf, 70);
+		rdbuf[r2] = 0;
 		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
 		{
 			return 0;
@@ -398,8 +400,8 @@ int colorBall(fd_stdin)
 		atoi(rdbuf, &iny);
 
 		printf("input destination coordinates X:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
+		int r3 = read(fd_stdin, rdbuf, 70);
+		rdbuf[r3] = 0;
 		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
 		{
 			return 0;
@@ -407,15 +409,15 @@ int colorBall(fd_stdin)
 		atoi(rdbuf, &tox);
 
 		printf("input destination coordinates Y:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
+		int r4 = read(fd_stdin, rdbuf, 70);
+		rdbuf[r4] = 0;
 		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
 		{
 			return 0;
 		}
 		atoi(rdbuf, &toy);
 
-		while (iffine(inx, iny, tox, toy) == 0 || findpath(inx, iny, tox, toy) == 0)
+		while (iffine(inx, iny, tox, toy) == 0 || findpath(inx, iny, tox, toy) == 0 || r1<1 || r2<1 || r3<1 || r4<1)
 		{
 			if (iffine(inx, iny, tox, toy) == 0)printf("Please input a valid coordinate!Input again\n");
 			if (findpath(inx, iny, tox, toy) == 0)printf("No feasible path found!Input again\n");
