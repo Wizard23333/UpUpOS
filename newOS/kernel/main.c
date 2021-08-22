@@ -1591,6 +1591,10 @@ void gameMain(char *option, int fd_stdin, int fd_stdout)
 	{
 		runMine(fd_stdin, fd_stdout);
 	}
+                else if (!strcmp(option, "-colorball"))
+	{
+		colorBall(fd_stdin);
+	}
 	else
 	{
 		printf("Sorry, there no such option for game.\n");
