@@ -10,6 +10,9 @@
 #include "global.h"
 #include "proto.h"
 
+#define False 0
+#define True 1
+
 /*======================================================================*
 							TicTacToe
  *======================================================================*/
@@ -19,6 +22,8 @@ const int NO_BLANK = -1001;
 const int TREE_DEPTH = 3; //搜索树的最大深度
 const int NIL = 1001;    //空
 static int s_count;
+
+
 
 
 struct State//棋盘状态

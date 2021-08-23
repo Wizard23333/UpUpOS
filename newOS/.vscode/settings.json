@@ -1,5 +1,14 @@
 {
     "files.associations": {
-        "stdio.h": "c"
-    }
+        "stdio.h": "c",
+        "algorithm": "c",
+        "locale": "c",
+        "string": "c",
+        "vector": "c",
+        "chrono": "c",
+        "complex": "c",
+        "ios": "c",
+        "sstream": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

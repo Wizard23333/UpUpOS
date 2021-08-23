@@ -102,8 +102,8 @@ void Runpushbox(fd_stdin, fd_stdout)
     {
         clear();
         printf("\n");
-        boxMenu();
-        draw_map(map);
+        boxMenu();//绘制菜单
+        draw_map(map);//绘制整体地图
         printf("Current Score:%d\n", count);
         //找初始位置
         for (pi = 0; pi < 9; pi++)

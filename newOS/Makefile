@@ -29,7 +29,7 @@ OBJS		= kernel/kernel.o lib/syscall.o kernel/start.o kernel/main.o\
 			kernel/clock.o kernel/keyboard.o kernel/tty.o kernel/console.o\
 			kernel/i8259.o kernel/global.o kernel/protect.o kernel/proc.o\
 			kernel/systask.o kernel/hd.o\
-			kernel/game/fivechess.o kernel/game/mine.o kernel/game/pushbox.o kernel/game/2048.o kernel/game/tictactoe.o kernel/game/colorball.o\
+			kernel/game/fivechess.o kernel/game/mine.o kernel/game/pushbox.o kernel/game/2048.o kernel/game/tictactoe.o kernel/game/colorball.o kernel/game/draughts.o\
 			kernel/application/math.o kernel/application/calendar.o kernel/application/processmanager.o\
 			lib/printf.o lib/vsprintf.o\
 			lib/kliba.o lib/klib.o lib/string.o lib/misc.o\
@@ -125,6 +125,9 @@ kernel/game/pushbox.o: kernel/game/pushbox.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 kernel/game/2048.o: kernel/game/2048.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/game/draughts.o: kernel/game/draughts.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 kernel/game/tictactoe.o: kernel/game/tictactoe.c
