@@ -695,8 +695,8 @@ void TestA()
 
 	while (1)
 	{
-	        clear();
-	        CommandList();
+		clear();
+		CommandList();
 		printf("master@cherryOS: $ ");
 
 		memset(command3, 0, sizeof(command3));
@@ -1565,8 +1565,6 @@ void manMain(char *option)
 	printf("\n");
 }
 
-
-
 void gameMain(char *option, int fd_stdin, int fd_stdout)
 {
 	if (!strcmp(option, "NULL"))
@@ -1593,9 +1591,13 @@ void gameMain(char *option, int fd_stdin, int fd_stdout)
 	{
 		runMine(fd_stdin, fd_stdout);
 	}
-                else if (!strcmp(option, "-colorball"))
+	else if (!strcmp(option, "-colorball"))
 	{
 		colorBall(fd_stdin);
+	}
+	else if (!strcmp(option, "-draughts"))
+	{
+		runDraghts(fd_stdin, fd_stdout);
 	}
 	else
 	{
