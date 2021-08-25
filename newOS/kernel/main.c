@@ -695,8 +695,7 @@ void TestA()
 
 	while (1)
 	{
-		clear();
-		CommandList();
+		
 		printf("master@cherryOS: $ ");
 
 		memset(command3, 0, sizeof(command3));
