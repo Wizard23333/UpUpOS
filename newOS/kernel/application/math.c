@@ -28,98 +28,10 @@ void mathMain(char *expression)
 	}
 	else
 	{
-		char str_list[2][10] = {"-beauty", "-rev"};
-		int flag[2] = {1, 1};
-		for (int i = 0; i < 2; ++i)
-		{
-			int j = 0;
-			while (expression[j] != ' ' && expression[j] != '\0')
-			{
-				if (expression[j] != str_list[i][j])
-				{
-					flag[i] = 0;
-					break;
-				}
-				++j;
-			}
-		}
+		
 
-		if (flag[0])
-		{
-			if (strlen(expression) > 8)
-			{
-				char *value = expression + 8;
-
-				if (!check_exp_notion(value))
-				{
-					printf("Please check the expression and try again.\n");
-					printf("\n");
-					return;
-				}
-
-				bucket_stack_clear();
-				if (!check_exp_bucket(value))
-				{
-					printf("Please check the expression and try again.\n");
-					printf("\n");
-					return;
-				}
-
-				int result = calculate(value, False, True);
-				if (result != EMPTY_NUM)
-				{
-					printf("The result is %d\n", result);
-				}
-				else
-				{
-					printf("You can input [help] to know more.\n");
-				}
-			}
-			else
-			{
-				printf("You should add the expression you want to calculate.\n");
-				printf("You can input [man cal] to know more.\n");
-			}
-		}
-		else if (flag[1])
-		{
-			if (strlen(expression) > 5)
-			{
-				char *value = expression + 5;
-
-				if (!check_exp_notion(value))
-				{
-					printf("Please check the expression and try again.\n");
-					printf("\n");
-					return;
-				}
-
-				bucket_stack_clear();
-				if (!check_exp_bucket(value))
-				{
-					printf("Please check the expression and try again.\n");
-					printf("\n");
-					return;
-				}
-
-				int result = calculate(value, True, False);
-				if (result != EMPTY_NUM)
-				{
-					printf("The result is %d\n", result);
-				}
-				else
-				{
-					printf("You can input [help] to know more.\n");
-				}
-			}
-			else
-			{
-				printf("You should add the expression you want to calculate.\n");
-				printf("You can input [man cal] to know more.\n");
-			}
-		}
-		else
-		{
+		
+		
 			if (strlen(expression) > 0)
 			{
 				char *value = expression;
@@ -154,7 +66,7 @@ void mathMain(char *expression)
 				printf("You should add at least a expression.\n");
 				printf("You can input [help] to know more.\n");
 			}
-		}
+		
 	}
 
 	printf("\n");
@@ -443,23 +355,7 @@ int Cal(int left, char op, int right)
 	}
 }
 
-/*============ 输出后缀表达式 ============*/
-void showBackMode(struct Data result[], int size)
-{
-	printf("The reverse polish notation is: ");
-	for (int i = 0; i < size; ++i)
-	{
-		if (result[i].flag == 0)
-		{
-			printf("%c ", result[i].data);
-		}
-		else
-		{
-			printf("%d ", result[i].data);
-		}
-	}
-	printf("\n");
-}
+
 
 /*============ 计算后缀表达式的结果 ============*/
 int calResult(struct Data result[], int size)
@@ -560,10 +456,7 @@ int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
 		}
 	}
 
-	if (if_showrev)
-	{
-		showBackMode(result, index);
-	}
+	
 
 	return calResult(result, index);
 }
