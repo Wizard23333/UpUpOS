@@ -13,639 +13,282 @@
 /*****************************************************************************
  *                               five chess
  *****************************************************************************/
-#define WIDTH 15
-#define HIGHT 15
-#define WHITE 0
-#define BLACK 1
-#define WIN 2
 
-char WHITE_FLAG = 'O';//大写o
-char BLACK_FLAG = 'X';
+#define true 1
+#define false 0
+int N = 15;       //15*15的棋盘
+const char ChessBoard = '+';  //棋盘标志
+const char flag1 = 'o';    //玩家1标志
+const char flag2 = 'x';    //玩家2或电脑标志
+int me = true; //true黑子， false， 白子
+int over = false;
+char box[15][15] = {}; //全部落子点
 
-char map[WIDTH][HIGHT];
-int situationPC[WIDTH][HIGHT] = { 0 };  //situation
-int situationPlayer[WIDTH][HIGHT] = { 0 };
+int init() {
+	me = true; //true黑子， false， 白子
+	over = false;
 
-int player = BLACK;
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 15; j++) {
+			box[i][j] = ChessBoard;
+		}
+	}
 
-void init_map();
-void draw_pc_map();
-void draw_player_map();
-void draw_map_chess();
-int horizontal(int row, int col, char whoFlag);
-int vertical(int row, int col, char whoFlag);
-int leftSlope(int row, int col, char whoFlag);
-int rightSlope(int row, int col, char whoFlag);
-int result(int left, int right, int count, int k, char num);
-void pcLoad();
-void benefit();
-int playerLoad(fd_stdin);
-int win();
+}
+int mode[][2] = {
+	{1, 0} ,//水平方向
+	{0, 1},//垂直方向
+	{1, 1},//右下 左上
+	{1, -1}//右上 左下
+};
+
+int check(int x, int y, char player, int mode[2]) {
+	// console.log(x,y,color,maparr[x][y]);
+	int count = 0;
+	for (int i = 1; i < 5; i++) {
+
+		if (box[x + i * mode[0]][y + i * mode[1]] == player) {
+			count++;
+		}
+		else {
+			break;
+		}
+
+	}
+	for (int i = 1; i < 5; i++) {
+		if (box[x - i * mode[0]][y - i * mode[1]] == player) {
+			count++;
+		}
+		else {
+			break;
+
+		}
+	}
+	return count;
+
+}
+void PrintChessBoard() {        //打印棋盘
+	clear();
+	printf("           Five Chess Game       \n");
+	printf("You can quit anytime by entering [q]\n");
+	printf("    1 2 3 4 5 6 7 8 9 101112131415\n");
+	printf("  |-------------------------------|\n");
+	for (int i = 0; i < N; ++i)
+	{
+		printf("%2d|", i + 1);
+		for (int j = 0; j < N; ++j)
+			printf("-%c", box[j][i]);
+		printf("-|\n");
+	}
+	printf("  |-------------------------------|\n");
+}
+
+
+
+
+int JudgeValue(int x, int y) {       //判断坐标的合法性
+		//1.在棋盘上
+	if (x >= 0 && x < N && y >= 0 && y < N) {
+		//2.所在位置为空（没有棋子）
+		if (box[x][y] == ChessBoard) {
+			return 1;      //合法
+		}
+	}
+	return 0;       //非法
+}
+
+void user(int x, int y) {
+	if (over) return;
+	if (!me) return;
+	int temp = 0;
+	if (box[x][y] == ChessBoard) { //判断没有落子
+
+		box[x][y] = flag1;
+		//PrintChessBoard();
+		for (int l = 0; l < 4; l++) {
+			if (temp < check(x, y, flag1, mode[l]))
+				temp = check(x, y, flag1, mode[l]);
+
+			if (temp >= 4) {
+				printf("player win\n");
+
+				over = true;
+				return;
+			}
+
+		}
+		if (!over) {
+			me = !me;
+			return;
+		}
+	}
+
+}
+
+//计算机
+int computerAI() {
+	int myScore[15][15]; //我方分数
+	int computerScore[15][15]; //计算机分数
+	int max = 0; //最大分数
+	int u = 0, v = 0; //最大分数点
+	int temp = 0;
+	for (int i = 0; i < 15; i++) {
+
+		for (int j = 0; j < 15; j++) {
+			myScore[i][j] = 0;
+			computerScore[i][j] = 0;
+		}
+	}
+
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 15; j++) {
+			if (box[i][j] == ChessBoard) { //每个空闲点上进行计算分数
+				temp = 0;
+				for (int l = 0; l < 4; l++)
+					if (temp < check(i, j, flag1, mode[l]))
+						temp = check(i, j, flag1, mode[l]);
+				if (temp == 1) {
+					myScore[i][j] += 200;
+				}
+				else if (temp == 2) {
+					myScore[i][j] += 400;
+				}
+				else if (temp == 3) {
+					myScore[i][j] += 2000;
+				}
+				else if (temp == 4) {
+					myScore[i][j] += 10000;
+				}
+				temp = 0;
+				for (int l = 0; l < 4; l++)
+					if (temp < check(i, j, flag2, mode[l]))
+						temp = check(i, j, flag2, mode[l]);
+				if (temp == 1) {
+					computerScore[i][j] += 220;
+				}
+				else if (temp == 2) {
+					computerScore[i][j] += 420;
+				}
+				else if (temp == 3) {
+					computerScore[i][j] += 2100;
+				}
+				else if (temp == 4) {
+					computerScore[i][j] += 20000;
+				}
+			}
+
+
+			//得出最大分数的点，并赋给u,v
+			if (myScore[i][j] > max) {
+				max = myScore[i][j];
+				u = i;
+				v = j;
+			}
+			else if (myScore[i][j] == max) {
+				if (computerScore[i][j] > computerScore[u][v]) {
+					u = i;
+					v = j;
+				}
+			}
+
+			if (computerScore[i][j] > max) {
+				max = computerScore[i][j];
+				u = i;
+				v = j;
+			}
+			else if (computerScore[i][j] == max) {
+				if (myScore[i][j] > myScore[u][v]) {
+					u = i;
+					v = j;
+				}
+			}
+
+		}//所有空闲点上进行计算分数
+	}
+	box[u][v] = flag2;
+
+	PrintChessBoard();
+
+	for (int l = 0; l < 4; l++) {
+		int temp1 = 0;
+		if (temp1 < check(u, v, flag2, mode[l]))
+			temp1 = check(u, v, flag2, mode[l]);
+
+		if (temp1 >= 4) {
+			printf("computer win\n");
+
+			over = true;
+			return 0;
+		}
+
+	}
+
+	if (!over) {
+		me = !me;
+		return v;
+	}
+
+}
+
+
+
 
 
 int fiveChess(fd_stdin) {
-	int result;
-	int nums;
-	init_map();
+	int x, y;
+	init();
+	int v;
+	//PrintChessBoard();
+	while (1) {
+		init();
+		while (!over) {
 
-	draw_map_chess();
+			PrintChessBoard();
+			while (1) {
 
-	for (nums = 0; nums < 225; nums++) {
-		if (player == BLACK) {
-			//玩家下子
-			printf("please white(%c) play\n", WHITE_FLAG);
-			player = WHITE;
-			result = playerLoad(fd_stdin);
-			if (!result) break;
-		}
-		else {
-			//电脑下子
-			player = BLACK;
-			pcLoad();
-		}
 
-		draw_map_chess();
-		if (win()) {
-			if (player == WHITE) {
-				printf("WHITE(%c) is winner.\n", WHITE_FLAG);
-			}
-			else {
-				printf("BLACK(%c) is winner.\n", BLACK_FLAG);
-			}
-			printf("Enter anything to exit...\n");
-			char rdbuf[128];
-			int r = read(fd_stdin, rdbuf, 70);
-			rdbuf[r] = 0;
-			while (r < 1)
-			{
+				char rdbuf[128];
+				int r = 0;
+
+				printf("input x:");
 				r = read(fd_stdin, rdbuf, 70);
 				rdbuf[r] = 0;
+				if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
+				{
+					return 0;
+				}
+				atoi(rdbuf, &x);
+				if (r > 2)
+				{
+					x = -1;
+				}
+
+				printf("input y:");
+				r = read(fd_stdin, rdbuf, 70);
+				rdbuf[r] = 0;
+				if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
+				{
+					return 0;
+				}
+				atoi(rdbuf, &y);
+				if (JudgeValue(x - 1, y - 1) == 1) {        //判断坐标是否合法
+					break;
+				}
+				printf("Wrong input, please re-enter：\n");
 			}
+			user(x - 1, y - 1);
+			v = computerAI();
 
-			break;
 		}
-
-	}
-
-	clear();
-}
-
-void init_map() {
-	int i = 0;
-	int j = 0;
-	for (i = 0; i < HIGHT; i++) {
-		for (j = 0; j < WIDTH; j++) {
-			map[i][j] = '+';
-		}
-	}
-}
-
-void draw_pc_map() {
-	int i, j, k;
-
-	for (i = 0; i < WIDTH; i++) {
-		for (j = 0; j < WIDTH; j++) {
-			printf("%d", situationPC[i][j]);
-			if (j < (WIDTH - 1)) printf("-");
-		}
-		printf("\n");
-	}
-}
-
-void draw_player_map() {
-	int i = 0, j = 0;
-
-	for (i = 0; i < WIDTH; i++) {
-		for (j = 0; j < WIDTH; j++) {
-			printf("%d", situationPlayer[i][j]);
-			if (j < (WIDTH - 1)) printf("-");
-		}
-		printf("\n");
-	}
-}
-
-void draw_map_chess() {
-	int i = 0, j = 0, k = 0;
-
-	clear();
-
-	printf("           Five Chess Game       \n");
-	printf("You can quit anytime by entering [q]\n");
-	printf("    X--------------------------->\n");
-	printf("    ");
-	for (k = 0; k < HIGHT; k++) {
-		if (k >= 0 && k <= 8) {
-			printf("%d ", k + 1);
-		}
-		else {
-			printf("%d", k + 1);
-		}
-	}
-	printf("\n");
-	for (i = 0; i < WIDTH; i++) {
-		printf("Y");
-		if (i >= 0 && i <= 8) {
-			printf("0%d ", i + 1);
-		}
-		else {
-			printf("%d ", i + 1);
-		}
-		for (j = 0; j < WIDTH; j++) {
-			printf("%c", map[i][j]);
-			if (j < (WIDTH - 1)) printf("-");
-		}
-		printf("\n");
-	}
-}
-
-int horizontal(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
-	int leftHad = 0;//左边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
-
-	if (map[row][col] != '+') {
-		return 0;
-	}
-	while (y > 0 && (map[x][y - 1] == '+' || map[x][y - 1] == whoFlag)) {
-		if (map[x][y - 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x][y - 2] != whoFlag) {
-				liveLeft = 1;
-				break;
-			}
-			spaceNum++;
-			y--;
-		}
-		else if (map[x][y - 1] == whoFlag) {
-			leftHad = 1;
-			y--;
-			count++;
-		}
-		else {//第2个空白
-			liveLeft = 1;
-			break;
-		}
-	}
-
-	//如果左边没有同色子，设置空白数为0
-	if (!leftHad) {
-		spaceNum = 0;
-	}
-
-	y = col;
-	while (y < 14 && (map[x][y + 1] == '+' || map[x][y + 1] == whoFlag)) {
-		if (map[x][y + 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x][y + 2] != whoFlag) {
-				liveRight = 1;
-				break;
-			}
-			spaceNum++;
-			y++;
-		}
-		else if (map[x][y + 1] == '+' && spaceNum > 0) {//第2个空白
-			liveRight = 1;
-			break;
-		}
-		else {
-			y++;
-			count++;
-		}
-
-	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
-}
-
-int vertical(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
-
-	if (map[row][col] != '+') {
-		return 0;
-	}
-	while (x > 0 && (map[x - 1][y] == '+' || map[x - 1][y] == whoFlag)) {
-		if (map[x - 1][y] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x - 2][y] != whoFlag) {
-				liveLeft = 1;
-				break;
-			}
-			spaceNum++;
-			x--;
-		}
-		else if (map[x - 1][y] == whoFlag) {
-			topHad = 1;
-			x--;
-			count++;
-		}
-		else {//第2个空白
-			liveLeft = 1;
-			break;
-		}
-	}
-
-	//如果左边没有同色子，设置空白数为0
-	if (!topHad) {
-		spaceNum = 0;
-	}
-	x = row;
-	while (x < 14 && (map[x + 1][y] == '+' || map[x + 1][y] == whoFlag)) {
-		if (map[x + 1][y] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x + 2][y] != whoFlag) {
-				liveRight = 1;
-				break;
-			}
-			spaceNum++;
-			x++;
-		}
-		else if (map[x + 1][y] == '+' && spaceNum > 0) {//第2个空白
-			liveRight = 1;
-			break;
-		}
-		else {
-			x++;
-			count++;
-		}
-
-	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
-}
-
-// +-+-+-@-+-+
-// +-+-@-+-+
-// +-@-+-+-+
-int leftSlope(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
-
-	if (map[row][col] != '+') {
-		return 0;
-	}
-	//向下
-	while (x < 14 && y>0 && (map[x + 1][y - 1] == '+' || map[x + 1][y - 1] == whoFlag)) {
-		if (map[x + 1][y - 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x + 2][y - 2] != whoFlag) {
-				liveLeft = 1;
-				break;
-			}
-			spaceNum++;
-			x++;
-			y--;
-		}
-		else if (map[x + 1][y - 1] == whoFlag) {
-			topHad = 1;
-			x++;
-			y--;
-			count++;
-		}
-		else {//第2个空白
-			liveLeft = 1;
-			break;
-		}
-	}
-
-	//如果上边没有同色子，设置空白数为0
-	if (!topHad) {
-		spaceNum = 0;
-	}
-
-	x = row;
-	y = col;
-
-	//向上
-	while (x > 0 && y < 14 && (map[x - 1][y + 1] == '+' || map[x - 1][y + 1] == whoFlag)) {
-		if (map[x - 1][y + 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x - 2][y + 2] != whoFlag) {
-				liveRight = 1;
-				break;
-			}
-			spaceNum++;
-			x--;
-			y++;
-		}
-		else if (map[x - 1][y + 1] == '+' && spaceNum > 0) {//第2个空白
-			liveRight = 1;
-			break;
-		}
-		else {
-			x--;
-			y++;
-			count++;
-		}
-
-	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
-}
-
-int rightSlope(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
-
-	if (map[row][col] != '+') {
-		return 0;
-	}
-	//向上
-	while (x > 0 && y > 0 && (map[x - 1][y - 1] == '+' || map[x - 1][y - 1] == whoFlag)) {
-		if (map[x - 1][y - 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x - 2][y - 2] != whoFlag) {
-				liveLeft = 1;
-				break;
-			}
-			spaceNum++;
-			x--;
-			y--;
-		}
-		else if (map[x - 1][y - 1] == whoFlag) {
-			topHad = 1;
-			x--;
-			y--;
-			count++;
-		}
-		else {//第2个空白
-			liveLeft = 1;
-			break;
-		}
-	}
-
-	//如果上边没有同色子，设置空白数为0
-	if (!topHad) {
-		spaceNum = 0;
-	}
-
-	x = row;
-	y = col;
-
-	//向下
-	while (x < 14 && y < 14 && (map[x + 1][y + 1] == '+' || map[x + 1][y + 1] == whoFlag)) {
-		if (map[x + 1][y + 1] == '+' && spaceNum < 1) {//第一个空白
-			if (map[x + 2][y + 2] != whoFlag) {
-				liveRight = 1;
-				break;
-			}
-			spaceNum++;
-			x++;
-			y++;
-		}
-		else if (map[x + 1][y + 1] == '+' && spaceNum > 0) {//第2个空白
-			liveRight = 1;
-			break;
-		}
-		else {
-			x++;
-			y++;
-			count++;
-		}
-
-	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
-}
-
-int result(int left, int right, int count, int k, char num) {
-	if (count == 1) {
-		return 1;
-	}
-	else if (count == 2) {
-		if (left && right) {//左右两边都是空的
-			if (k == 0) {
-				//电脑60
-				return num == BLACK_FLAG ? 60 : 50;
-			}
-			else {
-				return num == BLACK_FLAG ? 40 : 35;
-			}
-		}
-		else if (!left && !right) {
-			return 1;
-		}
-		else {
-			return 10;
-		}
-	}
-	else if (count == 3) {
-
-		if (left && right) {//左右两边都是空的
-			if (k == 0) {
-				//电脑950
-				return num == BLACK_FLAG ? 950 : 700;
-			}
-			else {
-				return num == BLACK_FLAG ? 900 : 650;
-			}
-		}
-		else if (!left && !right) {
-			return 1;
-		}
-		else {
-			return 100;
-		}
-	}
-	else if (count == 4) {
-		if (left && right) {//左右两边都是空的
-			if (k == 0) {
-				return num == BLACK_FLAG ? 6000 : 3500;
-			}
-			else {
-				return num == BLACK_FLAG ? 5000 : 3000;
-			}
-		}
-		else if (!left && !right) {
-			return 1;
-		}
-		else {
-			if (k == 0) {
-				return num == BLACK_FLAG ? 4000 : 800;
-			}
-			else {
-				return num == BLACK_FLAG ? 3600 : 750;
-			}
-		}
-	}
-	else {
-		if (k == 0) {
-			return num == BLACK_FLAG ? 20000 : 15000;
-		}
-		else {
-			return num == BLACK_FLAG ? 10000 : 3300;
-		}
-	}
-
-}
-
-void pcLoad() {
-	benefit();
-
-	int count = 0;
-	int row = 0;
-	int col = 0;
-	int i = 0;
-	int j = 0;
-	for (i = 0; i < 15; i++) {
-		for (j = 0; j < 15; j++) {
-			if (situationPC[i][j] > count) {
-				count = situationPC[i][j];
-				row = i;
-				col = j;
-			}
-			if (situationPlayer[i][j] > count) {
-				count = situationPlayer[i][j];
-				row = i;
-				col = j;
-			}
-		}
-	}
-
-	printf("qinxingPC[%d][%d]:%d\n", row, col, situationPC[row][col]);
-	printf("qinxingPlayer[%d][%d]:%d\n", row, col, situationPlayer[row][col]);
-
-	if (map[row][col] == '+') {
-		map[row][col] = BLACK_FLAG;
-	}
-
-}
-
-//记分
-void benefit() {
-	int n = 0;
-	int m = 0;
-	for (n = 0; n < 15; n++) {
-		for (m = 0; m < 15; m++) {
-			situationPC[n][m] = horizontal(n, m, BLACK_FLAG) + vertical(n, m, BLACK_FLAG) + leftSlope(n, m, BLACK_FLAG) + rightSlope(n, m, BLACK_FLAG);
-			situationPlayer[n][m] = horizontal(n, m, WHITE_FLAG) + vertical(n, m, WHITE_FLAG) + leftSlope(n, m, WHITE_FLAG) + rightSlope(n, m, WHITE_FLAG);
-		}
-	}
-
-}
-
-//玩家下子
-int playerLoad(fd_stdin) {
-	int x, y;
-	char rdbuf[128];
-	int r = 0;
-
-	printf("input x:");
-	r = read(fd_stdin, rdbuf, 70);
-	rdbuf[r] = 0;
-	if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-	{
-		return 0;
-	}
-	atoi(rdbuf, &x);
-	if (r > 2)
-	{
-		x = -1;
-	}
-
-	printf("input y:");
-	r = read(fd_stdin, rdbuf, 70);
-	rdbuf[r] = 0;
-	if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-	{
-		return 0;
-	}
-	atoi(rdbuf, &y);
-
-	while (x<0 || y<0 || x>HIGHT || y>WIDTH) {
-		printf("Please input a valid coordinate!Input again:\n");
-		printf("input x:");
+		printf("input any(except q/Q) again:");
+		char rdbuf[128];
+		int r = 0;
 		r = read(fd_stdin, rdbuf, 70);
 		rdbuf[r] = 0;
 		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
 		{
 			return 0;
 		}
-		atoi(rdbuf, &x);
-		if (r > 2)
-		{
-			x = -1;
-		}
-
-		printf("input y:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
-		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-		{
-			return 0;
-		}
-		atoi(rdbuf, &y);
 	}
-
-	x--;
-	y--;
-
-	while (x < 0 || y < 0 || x >= HIGHT || y >= WIDTH || map[x][y] != '+')
-	{
-		printf("Please input a valid coordinate!Input again:\n");
-		printf("input x:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
-		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-		{
-			return 0;
-		}
-		atoi(rdbuf, &x);
-		if (r > 2)
-		{
-			x = -1;
-		}
-
-		printf("input y:");
-		r = read(fd_stdin, rdbuf, 70);
-		rdbuf[r] = 0;
-		if (strcmp(rdbuf, "q") == 0 || strcmp(rdbuf, "Q") == 0)
-		{
-			return 0;
-		}
-		atoi(rdbuf, &y);
-		x--;
-		y--;
-	}
-
-	if (player == WHITE) {
-		map[x][y] = WHITE_FLAG;
-	}
-	return 1;
 }
 
-int win() {
-	char m;
-	int i, j;
-
-	if (player == WHITE) m = WHITE_FLAG;
-	else m = BLACK_FLAG;
-
-	for (i = 0; i < HIGHT; i++) {
-		for (j = 0; j < WIDTH; j++) {
-			if (map[i][j] == m) {
-				if ((i + 4) < HIGHT) {
-					if (map[i + 1][j] == m && map[i + 2][j] == m && map[i + 3][j] == m && map[i + 4][j] == m) return 1;
-				}
-				if ((j + 4) < WIDTH) {
-					if (map[i][j + 1] == m && map[i][j + 2] == m && map[i][j + 3] == m && map[i][j + 4] == m) return 1;
-				}
-				if ((i + 4) < HIGHT && (j + 4) < WIDTH) {
-					if (map[i + 1][j + 1] == m && map[i + 2][j + 2] == m && map[i + 3][j + 3] == m && map[i + 4][j + 4] == m) return 1;
-				}
-				if ((i + 4) < HIGHT && (j - 4) >= 0) {
-					if (map[i + 1][j - 1] == m && map[i + 2][j - 2] == m && map[i + 3][j - 3] == m && map[i + 4][j - 4] == m) return 1;
-				}
-			}
-		}
-	}
-	return 0;
-}
