@@ -30,7 +30,7 @@ OBJS		= kernel/kernel.o lib/syscall.o kernel/start.o kernel/main.o\
 			kernel/i8259.o kernel/global.o kernel/protect.o kernel/proc.o\
 			kernel/systask.o kernel/hd.o\
 			kernel/game/fivechess.o kernel/game/mine.o kernel/game/pushbox.o kernel/game/2048.o kernel/game/tictactoe.o kernel/game/colorball.o kernel/game/draughts.o\
-			kernel/application/math.o kernel/application/calendar.o kernel/application/processmanager.o\
+			kernel/application/math.o kernel/application/calendar.o kernel/application/processmanager.o kernel/application/systemguide.o\
 			lib/printf.o lib/vsprintf.o\
 			lib/kliba.o lib/klib.o lib/string.o lib/misc.o\
 			lib/open.o lib/read.o lib/write.o lib/close.o lib/unlink.o\
@@ -143,6 +143,9 @@ kernel/application/calendar.o: kernel/application/calendar.c
 	$(CC) $(CFLAGS) -o $@ $<
 	
 kernel/application/processmanager.o: kernel/application/processmanager.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+kernel/application/systemguide.o: kernel/application/systemguide.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 lib/printf.o: lib/printf.c

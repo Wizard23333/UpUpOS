@@ -781,6 +781,11 @@ void TestA()
 			clear();
 			runFileManage(fd_stdin);
 		}
+		else if (!strcmp(rdbuf, "systemguide"))
+		{
+			clear();
+			runSystemGuide(fd_stdin, fd_stdout);
+		}
 		else if (!strcmp(rdbuf, ""))
 		{
 			continue;
@@ -1225,7 +1230,7 @@ void gradualStart()
 	printf("                                 ########                                       ");
 	printf("                                       #                                        ");
 	printf("                                ######                                          ");
-	printf("                                  ##                                            ");
+	printf("                                    ##                                          ");
 	printf("                                                                                ");
 	printf("                                                                                ");
 
@@ -1424,6 +1429,8 @@ void gradualStart()
 	printf("                         ####       ##     ##  #####                            ");
 	printf("                             #############                                      ");
 	printf("                                                                                ");
+
+	milli_delay(DELAY_TIME);
 	clear();
 }
 
