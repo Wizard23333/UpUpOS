@@ -30,7 +30,9 @@ PUBLIC	struct task	task_table[NR_TASKS] = {
 PUBLIC	struct task	user_proc_table[NR_PROCS] = {
 	{TestA, STACK_SIZE_TESTA, "TestA"},
 	{TestB, STACK_SIZE_TESTB, "TestB"},
-	{TestC, STACK_SIZE_TESTC, "TestC"}};
+	{TestC, STACK_SIZE_TESTC, "TestC"},
+	{TestD, STACK_SIZE_TESTC, "TestD"},
+	{TestE, STACK_SIZE_TESTC, "TestE"}};
 
 PUBLIC	char		task_stack[STACK_SIZE_TOTAL];
 
