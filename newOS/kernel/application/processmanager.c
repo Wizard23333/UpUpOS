@@ -12,7 +12,6 @@
 
 #include "time.h"
 #include "termio.h"
-// #include "bits/signum.h"
 #include "signal.h"
 #include "sys/time.h"
 
@@ -20,20 +19,19 @@
 /*****************************************************************************
  *                                processManager
  *****************************************************************************/
-//进程管理主函数
 void runProcessManage(int fd_stdin)
 {
 	clear();
 	char readbuffer[128];
-	showProcessWelcome();
+	showPs();
 	while (1)
 	{
-		printf("cherryOS ~ process-manager: $ ");
+		printf("UpUpOS ~ process_manager: $ ");
 
-		int end = read(fd_stdin, readbuffer, 70);
-		readbuffer[end] = 0;
+		int nn = read(fd_stdin, readbuffer, 70);
+		readbuffer[nn] = 0;
 		int i = 0, j = 0;
-		//获得命令指令
+		int pid;
 		char cmd[20] = {0};
 		while (readbuffer[i] != ' ' && readbuffer[i] != 0)
 		{
@@ -41,7 +39,6 @@ void runProcessManage(int fd_stdin)
 			i++;
 		}
 		i++;
-		//获取命令目标
 		char target[20] = {0};
 		while (readbuffer[i] != ' ' && readbuffer[i] != 0)
 		{
@@ -49,192 +46,174 @@ void runProcessManage(int fd_stdin)
 			i++;
 			j++;
 		}
-		//结束进程;
+		target[j+1]=0;
+		atoi(target, &pid);
 		if (strcmp(cmd, "kill") == 0)
 		{
-			killProcess(target);
+			killProcess(pid);
 			continue;
 		}
 		//重启进程
-		else if (strcmp(cmd, "restart") == 0)
+		else if (strcmp(cmd, "start") == 0)
 		{
-			restartProcess(target);
+			startProcess(pid);
 			continue;
 		}
 		//弹出提示
 		else if (strcmp(readbuffer, "help") == 0)
 		{
 			clear();
-			showProcessWelcome();
+			showHelp();
 		}
 		//打印全部进程
 		else if (strcmp(readbuffer, "ps") == 0)
 		{
-			showProcess();
+			clear();
+			showPs();
 		}
 		//退出进程管理
-		else if (strcmp(readbuffer, "quit") == 0)
+		else if (strcmp(readbuffer, "quit") == 0||strcmp(readbuffer, "q") == 0)
 		{
 			clear();
-
 			break;
 		}
-		else if (!strcmp(readbuffer, "clear"))
+		else if (!strcmp(readbuffer, "release"))
 		{
-			clear();
+			release();
 		}
-		//错误命令提示
 		else
 		{
-			printf("Sorry, there no such command in the Process Manager.\n");
-			printf("You can input [help] to know more.\n");
+			printf("Input command error.\n");
+			printf("input [help] to learn more.\n");
 			printf("\n");
 		}
 	}
 }
 
-//打印欢迎界面
-void showProcessWelcome()
-{
-	printf("      ====================================================================\n");
-	printf("      #                            Welcome to                  ******    #\n");
-	printf("      #                     cherryOS ~ Process Manager         **   *    #\n");
-	printf("      #                                                        ******    #\n");
-	printf("      #                                                        **        #\n");
-	printf("      #                                                        **        #\n");
-	printf("      #             [COMMAND]                 [FUNCTION]                 #\n");
-	printf("      #                                                                  #\n");
-	printf("      #               $ ps           |     show all process                  #\n");
-	printf("      #           $ kill [id]    |     kill a process                    #\n");
-	printf("      #           $ restart [id] |     restart a process                 #\n");
-	printf("      #           $ quit         |     quit process management system    #\n");
-	printf("      #           $ help         |     show command list of this system  #\n");
-	printf("      #           $ clear        |     clear the cmd                     #\n");
-	printf("      #                                                                  #\n");
-	printf("      #                                                                  #\n");
-	printf("      #                                                                  #\n");
-	printf("      #                                                                  #\n");
-	printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-	printf("      #                       ALL RIGHT REVERSED                         #\n");
-	printf("      ====================================================================\n");
 
-	printf("\n\n");
-}
-
-//打印所有进程
-void showProcess()
+void showPs()
 {
-	int i;
-	printf("===============================================================================\n");
-	printf("    ProcessID    *    ProcessName    *    ProcessPriority    *    Running?           \n");
-	//进程号，进程名，优先级，是否在运行
-	printf("-------------------------------------------------------------------------------\n");
-	for (i = 0; i < NR_TASKS + NR_PROCS; i++) //逐个遍历
+	printf("\n      #==================================================================#\n");
+	printf("      #                          Welcome to UpUpOS                       #\n");
+	printf("      #            --------------- Process Manager ---------------       #\n");
+	printf("      #                                                                  #\n");
+	printf("      #   ProcessID          Name          Priority          Running     #\n");
+	for (int i = 0; i < NR_TASKS + NR_PROCS; i++)
 	{
-		printf("        %d", proc_table[i].pid);
+		printf("      #     %d", proc_table[i].pid);
 		printf("                 %5s", proc_table[i].name);
-		printf("                   %2d", proc_table[i].priority);
+		printf("             %2d", proc_table[i].priority);
 		if (proc_table[i].priority == 0)
 		{
-			printf("                   no\n");
+			printf("              no       #\n");
 		}
 		else
 		{
-			printf("                   yes\n");
+			printf("              yes      #\n");
 		}
-		//printf("        %d                 %s                   %d                   yes\n", proc_table[i].pid, proc_table[i].name, proc_table[i].priority);
 	}
-	printf("===============================================================================\n\n");
+	printf("      #==================================================================#\n");
+	printf("      #====|   ps  |  kill  |  start  |  quit  |  help  |  release  |====#\n");
+	printf("      #==================================================================#\n\n");
 }
 
-int getMag(int n)
-{
-	int mag = 1;
-	for (int i = 0; i < n; i++)
-	{
-		mag = mag * 10;
-	}
-	return mag;
-}
 
-//计算进程pid
-int getPid(char str[])
+void showHelp()
 {
-	int length = 0;
-	for (; length < MAX_FILENAME_LEN; length++)
-	{
-		if (str[length] == '\0')
-		{
-			break;
-		}
-	}
-	int pid = 0;
-	for (int i = 0; i < length; i++)
-	{
-		if (str[i] - '0' > -1 && str[i] - '9' < 1)
-		{
-			pid = pid + (str[i] + 1 - '1') * getMag(length - 1 - i);
-		}
-		else
-		{
-			pid = -1;
-			break;
-		}
-	}
-	return pid;
+		printf("      #==================================================================#\n");
+		printf("      #                                         Welcome to               #\n");
+		printf("      #  ***     ***                               UpUpOS                #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***  *********           <Process Manager help>         #\n");
+		printf("      #  ***     ***  **       **     You can manage the process here    #\n");
+		printf("      #   *********   **       **                                        #\n");
+		printf("      #               **       **                                        #\n");
+		printf("      #               **********   [OPTION LIST]                         #\n");
+		printf("      #               **            ps -> show all process               #\n");
+		printf("      #  ***     ***  **            kill [id] -> kill a process          #\n");
+		printf("      #  ***     ***                start [id] -> start a process        #\n");
+		printf("      #  ***     ***                quit -> quit system                  #\n");
+		printf("      #  ***     *** *********      help -> show command list            #\n");
+		printf("      #   *********  **       **    release -> kill all free process     #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **********                                          #\n");
+		printf("      #              **                                                  #\n");
+		printf("      #              **                                                  #\n");
+		printf("      #==================================================================#\n");
+
 }
 
 //结束进程
-void killProcess(char str[])
+void killProcess(int pid)
 {
-	int pid = getPid(str);
-
-	//健壮性处理以及结束进程
 	if (pid >= NR_TASKS + NR_PROCS || pid < 0)
 	{
-		printf("The pid exceeded the range\n");
+		printf("Process does not exist\n");
+		return;
 	}
-	else if (pid < NR_TASKS)
+	else if (pid < NR_TASKS+1)
 	{
 		printf("System tasks cannot be killed.\n");
+		return;
 	}
 	else if (proc_table[pid].priority == 0 || proc_table[pid].p_flags == -1)
 	{
-		printf("Process not found.\n");
-	}
-	else if (pid == 4 || pid == 6)
-	{
-		printf("This process cannot be killed.\n");
+		printf("Process is already killed.\n");
+		return;
 	}
 	else
 	{
 		proc_table[pid].priority = 0;
 		proc_table[pid].p_flags = -1;
-		printf("Aim process is killed.\n");
+		clear();
+		printf("\n                             ----Process is killed----                    ");
 	}
-
-	showProcess();
+	showPs();
 }
 
 //重启进程
-void restartProcess(char str[])
+void startProcess(int pid)
 {
-	int pid = getPid(str);
-
 	if (pid >= NR_TASKS + NR_PROCS || pid < 0)
 	{
-		printf("The pid exceeded the range\n");
+		printf("Process does not exist\n");
+		return;
 	}
 	else if (proc_table[pid].p_flags != -1)
 	{
-		printf("This process is already running.\n");
+		printf("Process is already running.\n");
+		return;
 	}
 	else
 	{
 		proc_table[pid].priority = 1;
 		proc_table[pid].p_flags = 1;
-		printf("Aim process is running.\n");
+		clear();
+        printf("\n                            ----Process is running----                    ");
 	}
-
-	showProcess();
+	showPs();
+}
+//释放空间
+void release()
+{
+	for(int pid=0;pid<NR_TASKS + NR_PROCS;pid++)
+	{
+	if (pid < NR_TASKS+1)
+	{
+		continue;
+	}
+	else if (proc_table[pid].priority == 0 || proc_table[pid].p_flags == -1)
+	{
+		continue;
+	}
+	else if(pid!=8)
+	{
+		proc_table[pid].priority = 0;
+		proc_table[pid].p_flags = -1;
+	}
+	}
+	clear();
+	printf("\n                              ----Release finish----                      ");
+	showPs();
 }

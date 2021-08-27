@@ -1002,13 +1002,19 @@ void TestB()
 }
 
 /*****************************************************************************
- *                                TestC
+ *                                TestC-E
  *****************************************************************************/
 void TestC()
 {
 	spin("TestC");
 }
-
+void TestD()
+{
+	spin("TestD");
+}void TestE()
+{
+	spin("TestE");
+}
 /*****************************************************************************
  *                                panic
  *****************************************************************************/
@@ -1585,25 +1591,25 @@ void manMain(char *option)
 	{
 		clear();
 		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                      <COMMAND --- cal>           #\n");
-		printf("      #   ******      **             You can find the date  instructions #\n");
-		printf("      #   ****      **  **             through different instructions    #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****    [OPTION LIST]                          #\n");
-		printf("      #      **********  ******     -y [Y] -> Jump to the input year     #\n");
-		printf("      #      **********   ****      -m [Y/M] -> Jump to the input month  #\n");
-		printf("      #        ******               -d [Y/M/D] -> Jump to the input day  #\n");
-		printf("      #                                           and show the detailed  #\n");
-		printf("      #                                          information of the day  #\n");
-		printf("      #                             -pre -> Jump to the last month       #\n");
-		printf("      #                             -next -> Jump to the next month      #\n");
-		printf("      #                             -pre-y -> Jump to the last year      #\n");
-		printf("      #                             -next-y -> Jump to the next year     #\n");
-		printf("      #                           [EXAMPLE]                              #\n");
-		printf("      #                             cal -d 2021/1/1                      #\n");
+		printf("      #                                         Welcome to               #\n");
+		printf("      #  ***     ***                              UpUpOS                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***  *********              <COMMAND --- cal>           #\n");
+		printf("      #  ***     ***  **       **    You can find the date  instructions #\n");
+		printf("      #   *********   **       **      through different instructions    #\n");
+		printf("      #               **       **                                        #\n");
+		printf("      #               **********   [OPTION LIST]                         #\n");
+		printf("      #               **            -y [Y] -> Jump to the input year     #\n");
+		printf("      #  ***     ***  **            -m [Y/M] -> Jump to the input month  #\n");
+		printf("      #  ***     ***                -d [Y/M/D] -> Jump to the input day  #\n");
+		printf("      #  ***     ***                              and show the detailed  #\n");
+		printf("      #  ***     *** *********                   information of the day  #\n");
+		printf("      #   *********  **       **    -pre -> Jump to the last month       #\n");
+		printf("      #              **       **    -next -> Jump to the next month      #\n");
+		printf("      #              **       **    -pre-y -> Jump to the last year      #\n");
+		printf("      #              **********     -next-y -> Jump to the next year     #\n");
+		printf("      #              **           [EXAMPLE]                              #\n");
+		printf("      #              **             cal -d 2021/1/1                      #\n");
 		printf("      ====================================================================\n");
 	}
 	else if (!strcmp(option, "clear"))
