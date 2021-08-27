@@ -692,7 +692,7 @@ void TestA()
 	/*================================= 这里是显示在上面的系统信息 ===============================*/
 
 	CommandList();
-
+	int year = 2021, month = 9, day = 1;//日历需要的全局变量
 	while (1)
 	{
 
@@ -762,12 +762,12 @@ void TestA()
 		{
 			if (strlen(rdbuf) > 4)
 			{
-				calMain(rdbuf + 4);
+				calendar(rdbuf + 4, &year, &month, &day);
 			}
 			else
 			{
 				char *str = "NULL";
-				calMain(str);
+				calendar(str, &year, &month, &day);
 			}
 			continue;
 		}
@@ -1573,7 +1573,7 @@ void manMain(char *option)
 		printf("      #        ******                -mine -> for Mine Sweeping game     #\n");
 		printf("      #                              -tictactoe -> for TicTacToe game    #\n");
 		printf("      #                              -pushbox -> for PushBox game        #\n");
-		printf("      #                                                                  #\n");
+		printf("      #                              -colorball -> for colorball game    #\n");
 		printf("      #                           [EXAMPLE]                              #\n");
 		printf("      #                              game -chess -> play Five Chess game #\n");
 		printf("      #                                                                  #\n");
@@ -1589,21 +1589,21 @@ void manMain(char *option)
 		printf("      #            **                            cherryOS                #\n");
 		printf("      #        ***  **                                                   #\n");
 		printf("      #     ******   **                      <COMMAND --- cal>           #\n");
-		printf("      #   ******      **                You can search in a calendar     #\n");
-		printf("      #   ****      **  **              with adding different option.    #\n");
+		printf("      #   ******      **             You can find the date  instructions #\n");
+		printf("      #   ****      **  **             through different instructions    #\n");
 		printf("      #            **    **                                              #\n");
 		printf("      #        ******     ****    [OPTION LIST]                          #\n");
-		printf("      #      **********  ******     -month [Y/M] -> search for a month   #\n");
-		printf("      #      **********   ****      -week [Y/M/D] -> what day is it      #\n");
-		printf("      #        ******               -date [Y/M/D] -> location of a date  #\n");
-		printf("      #                                                                  #\n");
+		printf("      #      **********  ******     -y [Y] -> Jump to the input year     #\n");
+		printf("      #      **********   ****      -m [Y/M] -> Jump to the input month  #\n");
+		printf("      #        ******               -d [Y/M/D] -> Jump to the input day  #\n");
+		printf("      #                                           and show the detailed  #\n");
+		printf("      #                                          information of the day  #\n");
+		printf("      #                             -pre -> Jump to the last month       #\n");
+		printf("      #                             -next -> Jump to the next month      #\n");
+		printf("      #                             -pre-y -> Jump to the last year      #\n");
+		printf("      #                             -next-y -> Jump to the next year     #\n");
 		printf("      #                           [EXAMPLE]                              #\n");
-		printf("      #                                  cal -month 2019/12              #\n");
-		printf("      #                                  cal -week 2017/11/11            #\n");
-		printf("      #                                  cal -date 2019/8/31             #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
+		printf("      #                             cal -d 2021/1/1                      #\n");
 		printf("      ====================================================================\n");
 	}
 	else if (!strcmp(option, "clear"))
