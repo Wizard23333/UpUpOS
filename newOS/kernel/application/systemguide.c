@@ -103,7 +103,7 @@ void runApp(fd_stdin, fd_stdout)
         else if (strcmp(rdbuf, "3") == 0)
         {
             clear();
-            manMain("math")
+            manMain("math");
 
             printf("\nPress ANY key to continue!");
             int r = read(fd_stdin, rdbuf, 70);
