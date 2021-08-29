@@ -169,7 +169,7 @@ void TestA()
 	while (1)
 	{
 
-		printf("master@cherryOS: $ ");
+		printf("User@UpUpOS: ~ %% ");
 
 		memset(command3, 0, sizeof(command3));
 		memset(command4, 0, sizeof(command4));
@@ -730,27 +730,27 @@ void Loading()
 /*所有指令 & help窗口*/
 void CommandList()
 {
-	printf("      ====================================================================\n");
-	printf("      #                                         Welcome to               #\n");
-	printf("      #  ***     ***                             UpUPOS                  #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     ***  *********               [COMMAND LIST]             #\n");
-	printf("      #  ***     ***  **       **   $ help --- show the command list     #\n");
-	printf("      #   *********   **       **   $ clear --- clear the cmd            #\n");
-	printf("      #               **       **   $ man [command]                      #\n");
-	printf("      #               **********        --- know more about the command  #\n");
-	printf("      #               **            $ game [-option]                     #\n");
-	printf("      #  ***     ***  **                --- play the built-in game       #\n");
-	printf("      #  ***     ***                $ math [-option] [expression]        #\n");
-	printf("      #  ***     ***                    --- calculate the value          #\n");
-	printf("      #  ***     *** *********      $ cal [-option]                      #\n");
-	printf("      #   *********  **       **        --- date information             #\n");
-	printf("      #              **       **    $ process --- process manager        #\n");
-	printf("      #              **       **    $ file --- file manager              #\n");
-	printf("      #              **********                                          #\n");
-	printf("      #              **                                                  #\n");
-	printf("      #              **                                                  #\n");
-	printf("      ====================================================================\n");
+	printf("================================================================================");
+	printf("                                                Welcome to                      ");
+	printf("  ***     ***                                     UpUPOS                        ");
+	printf("  ***     ***                                                                   ");
+	printf("  ***     ***  *********                       [COMMAND LIST]                   ");
+	printf("  ***     ***  **       **           $ help --- show the command list           ");
+	printf("   *********   **       **           $ clear --- clear the cmd                  ");
+	printf("               **       **           $ man [command]                            ");
+	printf("               **********                --- know more about the command        ");
+	printf("               **                    $ game [-option]                           ");
+	printf("  ***     ***  **                        --- play the built-in game             ");
+	printf("  ***     ***                        $ math [-option] [expression]              ");
+	printf("  ***     ***                            --- calculate the value                ");
+	printf("  ***     *** *********              $ cal [-option]                            ");
+	printf("   *********  **       **                --- date information                   ");
+	printf("              **       **            $ process --- process manager              ");
+	printf("              **       **            $ file --- file manager                    ");
+	printf("              **********                                                        ");
+	printf("              **                                                                ");
+	printf("              **                                                                ");
+	printf("================================================================================");
 
 	printf("\n\n");
 }
