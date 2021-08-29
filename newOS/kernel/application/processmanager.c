@@ -16,9 +16,6 @@
 #include "sys/time.h"
 
 
-/*****************************************************************************
- *                                processManager
- *****************************************************************************/
 void runProcessManage(int fd_stdin)
 {
 	clear();
@@ -172,7 +169,7 @@ void killProcess(int pid)
 	showPs();
 }
 
-//重启进程
+//启动进程
 void startProcess(int pid)
 {
 	if (pid >= NR_TASKS + NR_PROCS || pid < 0)
