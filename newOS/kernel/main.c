@@ -1516,76 +1516,79 @@ void manMain(char *option)
 	{
 		clear();
 		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                     <COMMAND --- math>           #\n");
-		printf("      #   ******      **          Calculate the value of the expression  #\n");
-		printf("      #   ****      **  **        and you can do more by adding options. #\n");
-		printf("      #            **    **         The operator we support: [+-*/()]    #\n");
-		printf("      #        ******     ****                                           #\n");
-		printf("      #      **********  ******   [EXAMPLE]                              #\n");
-		printf("      #      **********   ****       math -beauty 1 +  2   -3*4          #\n");
-		printf("      #        ******                math -rev 3 * ( 7 - 4 ) + 8 / 4     #\n");
-		printf("      #                              math 1+2-(3*4)/5                    #\n");
-		printf("      #         [OPTION LIST]                                            #\n");
-		printf("      #             -beauty [exp] -> beautify the expression             #\n");
-		printf("      #             -rev [exp] -> output the reverse polish notation     #\n");
-		printf("      #             no option -> just calculate the value                #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
+		printf("      #                                         Welcome to               #\n");
+		printf("      #  ***     ***                              UpUpOS                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***  *********             <COMMAND --- math>           #\n");
+		printf("      #  ***     ***  **       **  Calculate the value of the expression #\n");
+		printf("      #   *********   **       **     The operator we support: [+-*/()]  #\n");
+		printf("      #               **       **                                        #\n");
+		printf("      #               **********   [OPTION LIST]                         #\n");
+		printf("      #               **           math expression-> calculate the value #\n");
+		printf("      #  ***     ***  **                                                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     *** *********      [EXAMPLE]                            #\n");
+		printf("      #   *********  **       **     math 1+2-(3*4)/5                    #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **********                                          #\n");
+		printf("      #              **                                                  #\n");
+		printf("      #              **                                                  #\n");
 		printf("      ====================================================================\n");
+	
 	}
 	else if (!strcmp(option, "help"))
 	{
 		clear();
 		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                                                 #\n");
-		printf("      #   ****      **  **                 <COMMAND --- help>            #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****         Show the command list again.      #\n");
-		printf("      #      **********  ******      And you can input these commands    #\n");
-		printf("      #      **********   ****         to interact with the cherryOS.    #\n");
-		printf("      #        ******                                                    #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
+		printf("      #                                         Welcome to               #\n");
+		printf("      #  ***     ***                              UpUpOS                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***  *********             <COMMAND --- help>           #\n");
+		printf("      #  ***     ***  **       **        Show the command list .         #\n");
+		printf("      #   *********   **       **      You can input these commands to   #\n");
+		printf("      #               **       **         interact with the  UpUpOS.      #\n");
+		printf("      #               **********                                         #\n");
+		printf("      #               **                                                 #\n");
+		printf("      #  ***     ***  **                                                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     *** *********                                           #\n");
+		printf("      #   *********  **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **********                                          #\n");
+		printf("      #              **                                                  #\n");
+		printf("      #              **                                                  #\n");
 		printf("      ====================================================================\n");
+	
 	}
 	else if (!strcmp(option, "game"))
 	{
 		clear();
 		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                      <COMMAND --- game>          #\n");
-		printf("      #   ******      **              You can play the build-in game     #\n");
-		printf("      #   ****      **  **                  by adding [-option].         #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****    [OPTION LIST]                          #\n");
-		printf("      #      **********  ******      -2048 -> for 2048 game              #\n");
-		printf("      #      **********   ****       -chess -> for Five Chess game       #\n");
-		printf("      #        ******                -mine -> for Mine Sweeping game     #\n");
-		printf("      #                              -tictactoe -> for TicTacToe game    #\n");
-		printf("      #                              -pushbox -> for PushBox game        #\n");
-		printf("      #                              -colorball -> for colorball game    #\n");
-		printf("      #                           [EXAMPLE]                              #\n");
-		printf("      #                              game -chess -> play Five Chess game #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
+		printf("      #                                         Welcome to               #\n");
+		printf("      #  ***     ***                              UpUpOS                 #\n");
+		printf("      #  ***     ***                                                     #\n");
+		printf("      #  ***     ***  *********             <COMMAND --- game>           #\n");
+		printf("      #  ***     ***  **       **           Show the game list .         #\n");
+		printf("      #   *********   **       **      You can input these games to      #\n");
+		printf("      #               **       **                 play.                  #\n");
+		printf("      #               **********                                         #\n");
+		printf("      #               **               [OPTION LIST]                     #\n");
+		printf("      #  ***     ***  **               -chess -> for Five Chess game     #\n");
+		printf("      #  ***     ***                   -mine -> for Mine Sweeping game   #\n");
+		printf("      #  ***     ***                   -colorball -> for colorball game  #\n");
+		printf("      #  ***     *** *********                                           #\n");
+		printf("      #   *********  **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **       **                                         #\n");
+		printf("      #              **********      [EXAMPLE]                           #\n");
+		printf("      #              **              game -chess -> play Five Chess game #\n");
+		printf("      #              **                                                  #\n");
 		printf("      ====================================================================\n");
+	
 	}
 	else if (!strcmp(option, "cal"))
 	{
