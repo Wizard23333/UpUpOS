@@ -77,9 +77,29 @@
 
    ######  功能展示
 
-   ​        显示当前月份日历——cal:
+   ​        显示当前月份日历以及当月节日——cal:
 
-   
+   <img src="README.assets/image-20210829171738990.png" alt="image-20210829171738990" style="zoom:80%;" />
+
+   ​        跳转至某年——cal -y 2016:
+
+   <img src="README.assets/image-20210829172308472.png" alt="image-20210829172308472" style="zoom:80%;" />
+
+   ​        跳转至某年某月——cal -m 2018/10:
+
+   <img src="README.assets/image-20210829172508321.png" alt="image-20210829172508321" style="zoom:80%;" />
+
+   ​        显示某天信息并跳转到对应月份——cal -d 2019/12/25:
+
+   <img src="README.assets/image-20210829172709474.png" alt="image-20210829172709474" style="zoom:80%;" />
+
+   ​        向后(前)跳转一月(当前日期2021/9)——cal -next(pre):
+
+   <img src="README.assets/image-20210829173301064.png" alt="image-20210829173301064" style="zoom:80%;" />
+
+   ​        向后(前)跳转一年(当前日期2021/9)——cal -next(pre)-y:
+
+   <img src="README.assets/image-20210829173424904.png" alt="image-20210829173424904" style="zoom:80%;" />
 
 + **四则计算器**
 
