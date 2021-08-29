@@ -17,7 +17,7 @@
 #include "sys/time.h"
 
 /*======================================================================*
-							文件系统
+							文件管理
  *======================================================================*/
 #define MAX_FILE_PER_LAYER 10
 #define MAX_FILE_NAME_LENGTH 20
@@ -71,9 +71,9 @@ void runFileManage(int fd_stdin)
 		{
 			target[i] = rdbuf[i];
 		}
-		if (rdbuf[0] == 't' && rdbuf[1] == 'o' && rdbuf[2] == 'u' && rdbuf[3] == 'c' && rdbuf[4] == 'h')
+		if (rdbuf[0] == 'c' && rdbuf[1] == 'r' && rdbuf[2] == 'e' && rdbuf[3] == 'a' && rdbuf[4] == 't'&& rdbuf[5] == 'e')
 		{
-			if (rdbuf[5] != ' ')
+			if (rdbuf[6] != ' ')
 			{
 				printf("You should add the filename, like \"create XXX\".\n");
 				printf("Please input [help] to know more.\n");
@@ -461,10 +461,15 @@ void showFileList()
 {
 	printf("The elements in %s.\n", blocks[currentFileID].fileName); //通过currentFileID获取当前路径s
 
-	printf("-----------------------------------------\n");
-	printf("  filename |    type   | id  \n");
+    printf("\n#==================================================================#\n");
+	printf("#                          Welcome to UpUpOS                       #\n");
+	printf("#            --------------- File Manager ---------------          #\n");
+	printf("#                                                                  #\n");
+	printf("#  filename      type     id                                       #\n");
+	
 	for (int i = 0; i < blocks[currentFileID].childrenNumber; i++)
 	{ //遍历每个孩子
+	    printf("#");
 		printf("%10s", blocks[blocks[currentFileID].children[i]].fileName);
 		if (blocks[blocks[currentFileID].children[i]].fileType == 0)
 		{
@@ -474,9 +479,11 @@ void showFileList()
 		{
 			printf(" |   folder  |");
 		}
-		printf("%3d\n", blocks[blocks[currentFileID].children[i]].fileID);
+		printf("%3d                                       #\n", blocks[blocks[currentFileID].children[i]].fileID);
 	}
-	printf("-----------------------------------------\n");
+	printf("#==================================================================#\n");
+	printf("#====|create| mkdir | ls | rm | sv | cd | help | clear | quit |====#\n");
+	printf("#==================================================================#\n\n");
 }
 
 int SearchFile(char *name)
@@ -521,26 +528,28 @@ void DeleteFile(int ID)
 
 void ShowMessage()
 {
-	printf("      ====================================================================\n");
-	printf("      #                            Welcome to                  ******    #\n");
-	printf("      #                     cherryOS ~ File Manager            **        #\n");
-	printf("      #                                                        ******    #\n");
-	printf("      #                                                        **        #\n");
-	printf("      #         [COMMAND]                 [FUNCTION]           **        #\n");
-	printf("      #                                                                  #\n");
-	printf("      #     $ touch [filename]  |   create a new .txt file               #\n");
-	printf("      #     $ mkdir [dirname]   |   create a new folder                  #\n");
-	printf("      #     $ ls                |   list the elements in this level      #\n");
-	printf("      #     $ cd [dirname]      |   switch work path to this directory   #\n");
-	printf("      #     $ cd ..             |   return to the superior directory     #\n");
-	printf("      #     $ rm [name]         |   delete a file or directory           #\n");
-	printf("      #     $ help              |   show command list of this system     #\n");
-	printf("      #     $ clear             |   clear the cmd                        #\n");
-	printf("      #                                                                  #\n");
-	printf("      #                                                                  #\n");
-	printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-	printf("      #                       ALL RIGHT REVERSED                         #\n");
-	printf("      ====================================================================\n");
+	printf("      #==================================================================#\n");
+	printf("      #                                         Welcome to               #\n");
+	printf("      #  ***     ***                               UpUpOS                #\n");
+	printf("      #  ***     ***                                                     #\n");
+	printf("      #  ***     ***  *********           <file Manager help>            #\n");
+	printf("      #  ***     ***  **       **     You can manage the process here    #\n");
+	printf("      #   *********   **       **                                        #\n");
+	printf("      #               **       **                                        #\n");
+	printf("      #               **********   [OPTION LIST]                         #\n");
+	printf("      #               **      create [filename] ->create a new .txt file #\n");
+	printf("      #  ***     ***  **      mkdir [dirname] -> create a new folder     #\n");
+	printf("      #  ***     ***          ls -> list the elements in this level      #\n");
+	printf("      #  ***     ***          cd [dirname] -> switch work path           #\n");
+	printf("      #  ***     *** ********* to this directory(input ..return to the   #\n");
+	printf("      #   *********  **       **     superior directory)                 #\n");
+	printf("      #              **       ** rm [name] -> delete a file or directory #\n");
+	printf("      #              **       ** clear ->  clear the cmd                 #\n");
+	printf("      #              **********  help -> show command list of this system#\n");
+	printf("      #              **          sv   -> save file                       #\n");
+	printf("      #              **          quit -> quit system                     #\n");
+	printf("      #==================================================================#\n");
+
 
 	printf("\n\n");
 }
