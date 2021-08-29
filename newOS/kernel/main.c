@@ -26,8 +26,6 @@
 
 // my code here
 
-
-
 /*======================================================================*
 							kernel_main
  *======================================================================*/
@@ -165,7 +163,7 @@ void TestA()
 	/*================================= 这里是显示在上面的系统信息 ===============================*/
 
 	CommandList();
-	int year = 2021, month = 9, day = 1;//日历需要的全局变量
+	int year = 2021, month = 9, day = 1; //日历需要的全局变量
 	while (1)
 	{
 
@@ -181,7 +179,7 @@ void TestA()
 		mystrncpy(command4, rdbuf, 4);
 		mystrncpy(command5, rdbuf, 5);
 
-		if (!strcmp(command4, "help"))
+		if (!strcmp(command4, "home"))
 		{
 			clear();
 			CommandList();
@@ -267,6 +265,7 @@ void TestA()
 		{
 			clear();
 			/*================================= 这里是命令不存在的提示信息 ===============================*/
+
 			NotFound();
 		}
 	}
@@ -287,7 +286,8 @@ void TestC()
 void TestD()
 {
 	spin("TestD");
-}void TestE()
+}
+void TestE()
 {
 	spin("TestE");
 }
@@ -402,7 +402,7 @@ void gradualStart()
 		printf("                                                                                ");
 		printf("                                                                                ");
 		printf("                                                                                ");
-		printf("                                                                                ");
+		printf("||||||||||                                                            ||||||||||");
 
 		milli_delay(DELAY_TIME);
 		clear();
@@ -430,7 +430,7 @@ void gradualStart()
 		printf("                                                                                ");
 		printf("                                                                                ");
 		printf("                                                                                ");
-		printf("                                                                                ");
+		printf("||||||||||                                                            ||||||||||");
 		milli_delay(DELAY_TIME);
 		clear();
 	}
@@ -458,7 +458,7 @@ void gradualStart()
 	printf("                                                                                ");
 	printf("                                                                                ");
 	printf("                                                                                ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -486,7 +486,7 @@ void gradualStart()
 	printf("                                     #                                          ");
 	printf("                                   ##                                           ");
 	printf("                                                                                ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -514,7 +514,7 @@ void gradualStart()
 	printf("                                ######                                          ");
 	printf("                                    ##                                          ");
 	printf("                                                                                ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -542,7 +542,7 @@ void gradualStart()
 	printf("                              ########                                          ");
 	printf("                                    ##                                          ");
 	printf("                                                                                ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -570,7 +570,7 @@ void gradualStart()
 	printf("                      ###     ########                                          ");
 	printf("                         ##         ##                                          ");
 	printf("                                                                                ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -598,7 +598,7 @@ void gradualStart()
 	printf("                      ###     ########                                          ");
 	printf("                         ####       ##                                          ");
 	printf("                             ###########                                        ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -626,7 +626,7 @@ void gradualStart()
 	printf("                      ###     ########        ###                               ");
 	printf("                         ####       ##     ##                                   ");
 	printf("                             #############                                      ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -654,7 +654,7 @@ void gradualStart()
 	printf("                      ###     ########        ###     ###                       ");
 	printf("                         ####       ##     ##  #####                            ");
 	printf("                             #############                                      ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -682,7 +682,7 @@ void gradualStart()
 	printf("                      ###     ########        ###     ###                       ");
 	printf("                         ####       ##     ##  #####                            ");
 	printf("                             #############                                      ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -710,7 +710,7 @@ void gradualStart()
 	printf("                      ###     ########        ###     ###                       ");
 	printf("                         ####       ##     ##  #####                            ");
 	printf("                             #############                                      ");
-	printf("                                                                                ");
+	printf("||||||||||                                                            ||||||||||");
 
 	milli_delay(DELAY_TIME);
 	clear();
@@ -727,28 +727,28 @@ void Loading()
 	}
 }
 
-/*所有指令 & help窗口*/
+/*所有指令 & help窗口*/ 
 void CommandList()
 {
 	printf("================================================================================");
-	printf("                                                Welcome to                      ");
-	printf("  ***     ***                                     UpUPOS                        ");
+	printf("                                                                                ");
+	printf("  ***     ***                               UpUpOS's Home Page                  ");
 	printf("  ***     ***                                                                   ");
-	printf("  ***     ***  *********                       [COMMAND LIST]                   ");
-	printf("  ***     ***  **       **           $ help --- show the command list           ");
-	printf("   *********   **       **           $ clear --- clear the cmd                  ");
-	printf("               **       **           $ man [command]                            ");
-	printf("               **********                --- know more about the command        ");
-	printf("               **                    $ game [-option]                           ");
-	printf("  ***     ***  **                        --- play the built-in game             ");
-	printf("  ***     ***                        $ math [-option] [expression]              ");
-	printf("  ***     ***                            --- calculate the value                ");
-	printf("  ***     *** *********              $ cal [-option]                            ");
-	printf("   *********  **       **                --- date information                   ");
-	printf("              **       **            $ process --- process manager              ");
-	printf("              **       **            $ file --- file manager                    ");
-	printf("              **********                                                        ");
-	printf("              **                                                                ");
+	printf("  ***     ***  *********         COMMAND NAME --- COMMAND USAGE                 ");
+	printf("  ***     ***  **       **       home ---  back to UpUpOS's Home Page           ");
+	printf("   *********   **       **       clear --- clear the home screen                ");
+	printf("               **       **       systemguide --- open the guide application     ");
+	printf("               **********                        to help use UpUpOS             ");
+	printf("               **                game [-draughts -fivechesss -mine -colorball]  ");
+	printf("  ***     ***  **                     --- run the system games                  ");
+	printf("  ***     ***                    calculate  [expression]                        ");
+	printf("  ***     ***                         --- calculate the value of an expression  ");
+	printf("  ***     *** *********          cal [-option]                                  ");
+	printf("   *********  **       **             --- date information                      ");
+	printf("              **       **        processmgr --- process manager                 ");
+	printf("              **       **        filemgr --- open the file manager              ");
+	printf("              **********         man [-home -clear -systemguide...]             ");
+	printf("              **                        --- know more about the command         ");
 	printf("              **                                                                ");
 	printf("================================================================================");
 
@@ -758,27 +758,28 @@ void CommandList()
 /*没找到该指令窗口*/
 void NotFound()
 {
-	printf("      ====================================================================\n");
-	printf("      #                                                                  #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     ***  *********                                          #\n");
-	printf("      #  ***     ***  **       **                                        #\n");
-	printf("      #   *********   **       **                                        #\n");
-	printf("      #               **       **               Sorry                    #\n");
-	printf("      #               **********       Your command is not found         #\n");
-	printf("      #               **                                                 #\n");
-	printf("      #  ***     ***  **                                                 #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     *** *********                                           #\n");
-	printf("      #   *********  **       **                                         #\n");
-	printf("      #              **       **                                         #\n");
-	printf("      #              **       **                                         #\n");
-	printf("      #              **********      Input [help] for more information.  #\n");
-	printf("      #              **                                                  #\n");
-	printf("      #              **                                                  #\n");
-	printf("      ====================================================================\n");
+	printf("================================================================================");
+	printf("                                                                                ");
+	printf("  ***     ***                                  UpUpOS                           ");
+	printf("  ***     ***                                                                   ");
+	printf("  ***     ***  *********                                                        ");
+	printf("  ***     ***  **       **                                                      ");
+	printf("   *********   **       **          No manual entry for your COMMAND.           ");
+	printf("               **       **                                                      ");
+	printf("               **********       Use command: 'home' to go to the home page      ");
+	printf("               **                                                               ");
+	printf("  ***     ***  **                                                               ");
+	printf("  ***     ***                                                                   ");
+	printf("  ***     ***                                                                   ");
+	printf("  ***     *** *********                                                         ");
+	printf("   *********  **       **                                                       ");
+	printf("              **       **                                                       ");
+	printf("              **       **                                                       ");
+	printf("              **********                                                        ");
+	printf("              **                                                                ");
+	printf("              **                                                                ");
+	printf("================================================================================");
+
 	printf("\n\n");
 }
 
@@ -788,185 +789,189 @@ void manMain(char *option)
 	{
 		printf("Sorry, you should add an option.\n");
 	}
-	else if (!strcmp(option, "math"))
+	else if (!strcmp(option, "calculate"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #                                         Welcome to               #\n");
-		printf("      #  ***     ***                              UpUpOS                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***  *********             <COMMAND --- math>           #\n");
-		printf("      #  ***     ***  **       **  Calculate the value of the expression #\n");
-		printf("      #   *********   **       **     The operator we support: [+-*/()]  #\n");
-		printf("      #               **       **                                        #\n");
-		printf("      #               **********   [OPTION LIST]                         #\n");
-		printf("      #               **           math expression-> calculate the value #\n");
-		printf("      #  ***     ***  **                                                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     *** *********      [EXAMPLE]                            #\n");
-		printf("      #   *********  **       **     math 1+2-(3*4)/5                    #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **********                                          #\n");
-		printf("      #              **                                                  #\n");
-		printf("      #              **                                                  #\n");
-		printf("      ====================================================================\n");
-	
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        calculate -- calculate the value of an        ");
+		printf("   *********   **       **                     expression                       ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         calculate [expression]                        ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **            DESCRIPTION                                        ");
+		printf("  ***     ***                     only support expression with operator: +-*/() ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     *** *********      EXAMPLE                                            ");
+		printf("   *********  **       **         calculate 1+2*(3/9)                           ");
+		printf("              **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
-	else if (!strcmp(option, "help"))
+	else if (!strcmp(option, "home"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #                                         Welcome to               #\n");
-		printf("      #  ***     ***                              UpUpOS                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***  *********             <COMMAND --- help>           #\n");
-		printf("      #  ***     ***  **       **        Show the command list .         #\n");
-		printf("      #   *********   **       **      You can input these commands to   #\n");
-		printf("      #               **       **         interact with the  UpUpOS.      #\n");
-		printf("      #               **********                                         #\n");
-		printf("      #               **                                                 #\n");
-		printf("      #  ***     ***  **                                                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     *** *********                                           #\n");
-		printf("      #   *********  **       **                                         #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **********                                          #\n");
-		printf("      #              **                                                  #\n");
-		printf("      #              **                                                  #\n");
-		printf("      ====================================================================\n");
-	
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        home -- show UpUpOS's Home Page               ");
+		printf("   *********   **       **                                                      ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         home []                                       ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **            DESCRIPTION                                        ");
+		printf("  ***     ***                     you can choose the command on the Home Page   ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     *** *********                                                         ");
+		printf("   *********  **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else if (!strcmp(option, "game"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #                                         Welcome to               #\n");
-		printf("      #  ***     ***                              UpUpOS                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***  *********             <COMMAND --- game>           #\n");
-		printf("      #  ***     ***  **       **           Show the game list .         #\n");
-		printf("      #   *********   **       **      You can input these games to      #\n");
-		printf("      #               **       **                 play.                  #\n");
-		printf("      #               **********                                         #\n");
-		printf("      #               **               [OPTION LIST]                     #\n");
-		printf("      #  ***     ***  **               -chess -> for Five Chess game     #\n");
-		printf("      #  ***     ***                   -mine -> for Mine Sweeping game   #\n");
-		printf("      #  ***     ***                   -colorball -> for colorball game  #\n");
-		printf("      #  ***     *** *********                                           #\n");
-		printf("      #   *********  **       **                                         #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **       **                                         #\n");
-		printf("      #              **********      [EXAMPLE]                           #\n");
-		printf("      #              **              game -chess -> play Five Chess game #\n");
-		printf("      #              **                                                  #\n");
-		printf("      ====================================================================\n");
-	
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        game -- run the system games                  ");
+		printf("   *********   **       **                                                      ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         game [-draughts -fivechesss -mine -colorball] ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **            DESCRIPTION                                        ");
+		printf("  ***     ***                     -draughts    play draugghts with AI           ");
+		printf("  ***     ***                     -fivechesss    play fivechess with AI         ");
+		printf("  ***     *** *********           -mine    play mine game                       ");
+		printf("   *********  **       **         -colorball    play the colorball game         ");
+		printf("              **       **    EXAMPLE                                            ");
+		printf("              **       **         game -draughts                                ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else if (!strcmp(option, "cal"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #                                         Welcome to               #\n");
-		printf("      #  ***     ***                              UpUpOS                 #\n");
-		printf("      #  ***     ***                                                     #\n");
-		printf("      #  ***     ***  *********              <COMMAND --- cal>           #\n");
-		printf("      #  ***     ***  **       **    You can find the date  instructions #\n");
-		printf("      #   *********   **       **      through different instructions    #\n");
-		printf("      #               **       **                                        #\n");
-		printf("      #               **********   [OPTION LIST]                         #\n");
-		printf("      #               **            -y [Y] -> Jump to the input year     #\n");
-		printf("      #  ***     ***  **            -m [Y/M] -> Jump to the input month  #\n");
-		printf("      #  ***     ***                -d [Y/M/D] -> Jump to the input day  #\n");
-		printf("      #  ***     ***                              and show the detailed  #\n");
-		printf("      #  ***     *** *********                   information of the day  #\n");
-		printf("      #   *********  **       **    -pre -> Jump to the last month       #\n");
-		printf("      #              **       **    -next -> Jump to the next month      #\n");
-		printf("      #              **       **    -pre-y -> Jump to the last year      #\n");
-		printf("      #              **********     -next-y -> Jump to the next year     #\n");
-		printf("      #              **           [EXAMPLE]                              #\n");
-		printf("      #              **             cal -d 2021/1/1                      #\n");
-		printf("      ====================================================================\n");
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        cal -- show calendar of current month         ");
+		printf("   *********   **       **                                                      ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         cal [-y -m -d -next(pre) -next(pre)-y]        ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **            DESCRIPTION                                        ");
+		printf("  ***     ***                     -y    jump to the year                        ");
+		printf("  ***     ***                     -m    jump to the month of a year             ");
+		printf("  ***     *** *********           -d    jump to the day                         ");
+		printf("   *********  **       **         -next(pre)   jump backward(forward) one month ");
+		printf("              **       **         -next(pre)-y  jump backward(forward) one year ");
+		printf("              **       **    EXAMPLE                                            ");
+		printf("              **********          cal -d 2019/12/25                             ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else if (!strcmp(option, "clear"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                                                 #\n");
-		printf("      #   ****      **  **                 <COMMAND --- clear>           #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****        Clear the whole command station.   #\n");
-		printf("      #      **********  ******          You can enjoy yourself in       #\n");
-		printf("      #      **********   ****         interacting with the cherryOS.    #\n");
-		printf("      #        ******                                                    #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
-		printf("      ====================================================================\n");
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        clear -- clean the text on the whole window   ");
+		printf("   *********   **       **                                                      ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         clear []                                      ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **                                                               ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     *** *********                                                         ");
+		printf("   *********  **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else if (!strcmp(option, "man"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                                                 #\n");
-		printf("      #   ****      **  **                  <COMMAND --- man>            #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****            Know you want to know.         #\n");
-		printf("      #      **********  ******          Just input man [command]        #\n");
-		printf("      #      **********   ****         man will tell you everything.     #\n");
-		printf("      #        ******                Find a man when you have trouble.   #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
-		printf("      ====================================================================\n");
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        man -- format and display the on-line         ");
+		printf("   *********   **       **               command pages                          ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         man []                                        ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **                                                               ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     *** *********                                                         ");
+		printf("   *********  **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
-	else if (!strcmp(option, "process"))
+	else if (!strcmp(option, "processmgr"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                   <COMMAND --- process>         #\n");
-		printf("      #   ****      **  **              You can do process management    #\n");
-		printf("      #            **    **            at our Process Management System. #\n");
-		printf("      #        ******     ****                                           #\n");
-		printf("      #      **********  ******   [COMMAND LIST]                         #\n");
-		printf("      #      **********   ****      ps --- show all process              #\n");
-		printf("      #        ******               kill [id] --- kill a process         #\n");
-		printf("      #                             restart [id] --- restart a process   #\n");
-		printf("      #                             quit ---                             #\n");
-		printf("      #                                quit process management system    #\n");
-		printf("      #                             help ---                             #\n");
-		printf("      #                                show command list of this system  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
-		printf("      ====================================================================\n");
+
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        processmgr -- run the process manager         ");
+		printf("   *********   **       **                                                      ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         ps                                            ");
+		printf("               **                 [kill start release] ProcessID                ");
+		printf("  ***     ***  **                 help                                          ");
+		printf("  ***     ***                DESCRIPTION                                        ");
+		printf("  ***     ***                     ps    show the process list of UpUpOS         ");
+		printf("  ***     *** *********           [kill start release] ProcessID                ");
+		printf("   *********  **       **               kill/start/release a process            ");
+		printf("              **       **         help  show Help Page                          ");
+		printf("              **       **    EXAMPLE                                            ");
+		printf("              **********          kill 4                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
-	else if (!strcmp(option, "file"))
+	else if (!strcmp(option, "filemgr"))
 	{
 		clear();
 		printf("      ====================================================================\n");
@@ -991,10 +996,35 @@ void manMain(char *option)
 		printf("      #                       ALL RIGHT REVERSED                         #\n");
 		printf("      ====================================================================\n");
 	}
+	else if (!strcmp(option, "systemguide"))
+	{
+		clear();
+		printf("      ====================================================================\n");
+		printf("      #         *******                                                  #\n");
+		printf("      #            **                                                    #\n");
+		printf("      #        ***  **                                                   #\n");
+		printf("      #     ******   **                                                  #\n");
+		printf("      #   ******      **                                                 #\n");
+		printf("      #   ****      **  **                                               #\n");
+		printf("      #            **    **                                              #\n");
+		printf("      #        ******     ****                                           #\n");
+		printf("      #      **********  ******                                          #\n");
+		printf("      #      **********   ****                                           #\n");
+		printf("      #        ******                                                    #\n");
+		printf("      #                                                                  #\n");
+		printf("      #                                                                  #\n");
+		printf("      #                                                                  #\n");
+		printf("      #                                                                  #\n");
+		printf("      #                                                                  #\n");
+		printf("      #                                                                  #\n");
+		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
+		printf("      #                       ALL RIGHT REVERSED                         #\n");
+		printf("      ====================================================================\n");
+	}
 	else
 	{
-		printf("Sorry, there no such option for man.\n");
-		printf("You can input [help] to know more.\n");
+		printf("Sorry, there is no such command for man\n");
+		printf("Why not just try using \" man home \"\n");
 	}
 
 	printf("\n");
@@ -1005,22 +1035,6 @@ void gameMain(char *option, int fd_stdin, int fd_stdout)
 	if (!strcmp(option, "NULL"))
 	{
 		printf("Sorry, you should add an option.\n");
-	}
-	else if (!strcmp(option, "-2048"))
-	{
-		Run2048(fd_stdin, fd_stdout);
-	}
-	else if (!strcmp(option, "-chess"))
-	{
-		fiveChess(fd_stdin);
-	}
-	else if (!strcmp(option, "-tictactoe"))
-	{
-		TicTacToe(fd_stdin, fd_stdout);
-	}
-	else if (!strcmp(option, "-pushbox"))
-	{
-		Runpushbox(fd_stdin, fd_stdout);
 	}
 	else if (!strcmp(option, "-mine"))
 	{
