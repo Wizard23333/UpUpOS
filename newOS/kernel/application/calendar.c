@@ -322,6 +322,10 @@ void calendar(char* option, int* year, int *month, int *day)
 				{
 					printf("%d is a normal year, the day you input should not greater than 28.\n", *year);
 				}
+				else if((*month==4&&*day==31)||(*month==6&&*day==31)||(*month==9&&*day==31)||(*month==11&&*day==31))
+				{
+					printf("The day you input should between 1 to 30.");
+				}
 				else
 				{
 					clear();
