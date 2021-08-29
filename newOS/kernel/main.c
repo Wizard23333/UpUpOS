@@ -169,7 +169,7 @@ void TestA()
 	while (1)
 	{
 
-		printf("User@UpUpOS: ~ %% ");
+		printf(" User@UpUpOS^ ");
 
 		memset(command3, 0, sizeof(command3));
 		memset(command4, 0, sizeof(command4));
