@@ -142,7 +142,7 @@ void TestA()
 	char tty_name[] = "/dev_tty0";
 
 	char rdbuf[128];
-	char command3[100], command4[100], command5[100];
+	char command3[100], command4[100], command5[100], command9[100];
 
 	int fd_stdin = open(tty_name, O_RDWR);
 	assert(fd_stdin == 0);
@@ -155,9 +155,10 @@ void TestA()
 	clear();
 
 	/*================================= 这里是开机动画 ===============================*/
-	Booting();
 
 	Loading();
+
+	Booting();
 
 	clear();
 	/*================================= 这里是显示在上面的系统信息 ===============================*/
@@ -172,12 +173,14 @@ void TestA()
 		memset(command3, 0, sizeof(command3));
 		memset(command4, 0, sizeof(command4));
 		memset(command5, 0, sizeof(command5));
+		memset(command9, 0, sizeof(command9));
 
 		int r = read(fd_stdin, rdbuf, 70);
 		rdbuf[r] = 0;
 		mystrncpy(command3, rdbuf, 3);
 		mystrncpy(command4, rdbuf, 4);
 		mystrncpy(command5, rdbuf, 5);
+		mystrncpy(command9, rdbuf, 9);
 
 		if (!strcmp(command4, "home"))
 		{
@@ -199,7 +202,6 @@ void TestA()
 				char *str = "NULL";
 				manMain(str);
 			}
-
 			continue;
 		}
 		else if (!strcmp(command4, "game"))
@@ -215,18 +217,17 @@ void TestA()
 			}
 			continue;
 		}
-		else if (!strcmp(command4, "math"))
+		else if (!strcmp(command9, "calculate"))
 		{
-			if (strlen(rdbuf) > 5)
+			if (strlen(rdbuf) > 10)
 			{
-				mathMain(rdbuf + 5);
+				mathMain(rdbuf + 10);
 			}
 			else
 			{
 				char *str = "NULL";
 				mathMain(str);
 			}
-
 			continue;
 		}
 		else if (!strcmp(command3, "cal"))
@@ -242,12 +243,12 @@ void TestA()
 			}
 			continue;
 		}
-		else if (!strcmp(rdbuf, "process"))
+		else if (!strcmp(rdbuf, "processmgr"))
 		{
 			clear();
 			runProcessManage(fd_stdin);
 		}
-		else if (!strcmp(rdbuf, "file"))
+		else if (!strcmp(rdbuf, "filemgr"))
 		{
 			clear();
 			runFileManage(fd_stdin);
@@ -727,7 +728,7 @@ void Loading()
 	}
 }
 
-/*所有指令 & help窗口*/ 
+/*所有指令 & help窗口*/
 void CommandList()
 {
 	printf("================================================================================");
@@ -1047,6 +1048,10 @@ void gameMain(char *option, int fd_stdin, int fd_stdout)
 	else if (!strcmp(option, "-draughts"))
 	{
 		runDraghts(fd_stdin, fd_stdout);
+	}
+	else if (!strcmp(option, "-fivechess"))
+	{
+		fiveChess(fd_stdin);
 	}
 	else
 	{
