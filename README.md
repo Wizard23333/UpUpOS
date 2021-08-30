@@ -35,29 +35,140 @@
 
 ### 1.1 项目介绍
 
+本操作系统项目使用《Orange'S：一个操作系统的实现》中给出的第`9`章第`j`份源码为基础，在其上实现了一个简单的操作系统，本操作系统实现了3个系统级应用：系统引导程序，文件管理系统和进程管理系统；实现了7个用户级应用，其中包括2个应用：日历，四则计算器，5个系统小游戏：五子连珠，国际跳棋，五子棋，扫雷，数独游戏。
+
+除此之外，系统还配备有命令行式的操作主界面，其上显示有可以使用的命令，便于初次使用的人员操作。
+
 ### 1.2 项目开发环境
+
++ 编程语言：C，makefile
++ 开发环境：
+  + 虚拟机：VMware Workstation 15 / VMware Fusion 12.1.2
+  + Linux版本：Ubuntu 20.04.2.0
+  + bochs版本：2.9.6
 
 ### 1.3 项目完成进展
 
++ 2020.08.06 开始阅读项目要求，确定项目整体完成内容
++ 2020.08.10 安装虚拟机以及bochs，对书中源码进行初步测试
++ 2020.08.12 阅读《Orange'S：一个操作系统的实现》对书中章节和源代码进行学习分析，了解各部分运作原理
++ 2020.08.17 建立项目仓库，以书中给出源码第`9`章第`j`份为项目初始代码，在其上迭代
++ 2020.08.29 基本完成整体项目
+
 ### 1.4 小组分工
 
++ #### 吴昊天
 
+  + 项目环境搭建
+  + 项目仓库建立
+  + 整体框架选择搭建
+  + 系统整体界面
+  + 系统引导程序
+  + 国际跳棋游戏
+
++ #### 刘心宇
+
+
+
++ #### 王绍杰
+
+
+
++ #### 胡相乾
 
 
 
 ## 2. 系统使用说明
 
-
-
 ### 2.1 安装环境
+
+#### 2.1.1 虚拟机运行软件
+
++ Windows请选择VMware
++ macOS请选择VMware Fusion/Paralles Desktop
+
+#### 2.1.2 Linux版本
+
+本项目使用的Linux版本为Ubuntu 20.04.2.0和Ubuntu 20.04.1.0，未对其他版本进行测试，请按需选择Linux版本
+
+#### 2.1.3 bochs 安装流程
+
++ 安装依赖插件
+
+  ```shell
+  sudo apt-get install build-essential
+  sudo apt-get install xorg-dev
+  sudo apt-get install bison
+  sudo apt-get install libgtk2.0-dev
+  sudo apt-get install nasm
+  ```
+
++ 安装bochs
+
+  + 下载bochs：[bochs-2.6.9.tar.gz](https://sourceforge.net/projects/bochs/files/bochs/)
+
+  + 解压下载的压缩包
+
+  + 运行运行configure脚本
+
+    ```shell
+    sudo ./configure --enable-debugger --enable-disasm
+    ```
+
+  + 运行makefile
+
+    ```shell
+    make clean
+    sudo make
+    ```
+
+  + 安装
+
+    ```shell
+    sudo make install 
+    ```
+
+#### 2.1.4 编译UpUpOS项目
+
++ 进入UpUpOS的项目目录
+
++ 运行命令
+
+  ```shell
+  make image
+  ```
 
 ### 2.2 开机运行
 
++ 修改bochsrc的BIOS路径为自己的BIOS路径
+
+  ![截屏2021-08-30 上午11.13.26](README.assets/截屏2021-08-30 上午11.13.26.png)
+
++ 进入到UpUpOS的项目目录
+
++ 输入指令
+
+  ```shell
+  bochs
+  ```
+
+  或
+
+  ```shell
+  bochs -f bochsrc
+  ```
+
++ 输入c
+
++ 退出系统
+
+  在终端中使用`control`+`c` 和 `control`+`d`
+
 ### 2.3 系统引导程序
 
+
+
 ### 2.4 系统级应用
-
-
 
 #### 2.4.1 文件管理
 
@@ -242,7 +353,7 @@ void release();
 
   源码路径:kernel\application\calendar.c
 
-  ###### 源码说明
+  **源码说明**
 
   | 函数名称   | 返回值类型 | 函数参数                                      | 作用                   |
   | ---------- | ---------- | --------------------------------------------- | ---------------------- |
@@ -255,7 +366,7 @@ void release();
   | printDay   | void       | int year, int month,int day                   | 输出某一天的信息       |
   | calendar   | void       | char* option, int* year, int *month, int *day | 进程主函数             |
 
-  ###### 部分代码示例
+  **部分代码示例**
 
   ```c
   int leapYear(int year)

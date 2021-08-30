@@ -73,7 +73,7 @@ void runApp(fd_stdin, fd_stdout)
     {
         printf("UpUpOS has the applications below, please choose one to run:\n");
         printf("1. processmanager\n");
-        printf("2. file system\n");
+        printf("2. file manager\n");
         printf("3. calculator\n");
         printf("4. calendar\n");
         printf("6. Quit now");
