@@ -69,8 +69,14 @@ void runFileManage(int fd_stdin)
 		char target[10];
 		for (int i = 0; i <= 1 && i < r; i++)
 		{
+			target[i] = '\0';
+		}
+		
+		for (int i = 0; i <= 1 && i < r; i++)
+		{
 			target[i] = rdbuf[i];
 		}
+		//printf("command:%s", target);
 		if (rdbuf[0] == 'c' && rdbuf[1] == 'r' && rdbuf[2] == 'e' && rdbuf[3] == 'a' && rdbuf[4] == 't' && rdbuf[5] == 'e')
 		{
 			if (rdbuf[6] != ' ')
@@ -99,6 +105,46 @@ void runFileManage(int fd_stdin)
 				_name[i] = rdbuf[i + 6];
 			}
 			CreateFIle(_name, 1);
+		}
+		else if (rdbuf[0] == 'r' && rdbuf[1] == 'e' && rdbuf[2] == 'a' && rdbuf[3] == 'd')
+		{
+			if (rdbuf[4] != ' ')
+			{
+				printf("You should add the file name, like \"read XXX\".\n");
+				printf("Please input [help] to know more.\n");
+				continue;
+			}
+			char N[MAX_FILE_NAME_LENGTH];
+			for (int i = 0; i < MAX_FILE_NAME_LENGTH && i < r - 3; i++)
+			{
+				_name[i] = rdbuf[i +5];
+			}
+			ReadFIle(_name);
+		}
+		else if (rdbuf[0] == 'w' && rdbuf[1] == 'r' && rdbuf[2] == 'i' && rdbuf[3] == 't' && rdbuf[4] == 'e')
+		{
+			if (rdbuf[5] != ' ')
+			{
+				printf("You should add the dirname, like \"write XXX xxx\".\n");
+				printf("Please input [help] to know more.\n");
+				continue;
+			}
+			char N[MAX_FILE_NAME_LENGTH],temp[MAX_CONTENT_];
+			for (int i = 0; i < MAX_CONTENT_; i++)
+			      temp[i] = '\0';
+			int i = 0,j=0;
+			for (i=0; i < MAX_FILE_NAME_LENGTH && i < r - 3; i++)
+			{
+				if(rdbuf[i + 6]==' ')
+				    break;
+				_name[i] = rdbuf[i + 6];
+			}
+			for (i++,j=0; i < MAX_FILE_NAME_LENGTH && i < r - 3; i++,j++)
+			{
+				temp[j] = rdbuf[i+6];
+			}
+			//printf("%s  %s %s\n",_name, temp,rdbuf);
+			WriteFIle(_name, temp);
 		}
 		else if (strcmp(rdbuf, "ls") == 0)
 		{
@@ -457,29 +503,68 @@ int CreateFIle(char *fileName, int fileType)
 	}
 }
 
+
+int ReadFIle(char *fileName)
+{
+	
+		for (int i = 0; i < blocks[currentFileID].childrenNumber; i++)
+		{
+			if (strcmp(blocks[blocks[currentFileID].children[i]].fileName, fileName) == 0)
+			{
+				if (!blocks[blocks[currentFileID].children[i]].fileType)
+				{
+                    printf("content: %s",blocks[blocks[currentFileID].children[i]].content);
+					return 1;
+				}
+				
+			}
+		}
+        printf("You need input a file  name!\n");
+		return 0;
+	
+}
+int WriteFIle(char *fileName, char *fileContent)
+{
+	
+		for (int i = 0; i < blocks[currentFileID].childrenNumber; i++)
+		{
+			if (strcmp(blocks[blocks[currentFileID].children[i]].fileName, fileName) == 0)
+			{
+				if (!blocks[blocks[currentFileID].children[i]].fileType)
+				{
+                    strcpy(blocks[blocks[currentFileID].children[i]].content,fileContent);
+					return 1;
+				}
+				
+			}
+		}
+        printf("You need input a file  name!\n");
+		return 0;
+	
+}
 void showFileList()
 {
 	printf("The elements in %s.\n", blocks[currentFileID].fileName); //通过currentFileID获取当前路径s
 
-	printf("\n#==================================================================#\n");
+    printf("\n#==================================================================#\n");
 	printf("#                          Welcome to UpUpOS                       #\n");
 	printf("#            --------------- File Manager ---------------          #\n");
 	printf("#                                                                  #\n");
-	printf("#  filename      type     id                                       #\n");
-
+	printf("#  filename                type               id                   #\n");
+	
 	for (int i = 0; i < blocks[currentFileID].childrenNumber; i++)
 	{ //遍历每个孩子
-		printf("#");
+	    printf("#");
 		printf("%10s", blocks[blocks[currentFileID].children[i]].fileName);
 		if (blocks[blocks[currentFileID].children[i]].fileType == 0)
 		{
-			printf(" | .txt file |");
+			printf("             .txt file  ");
 		}
 		else
 		{
-			printf(" |   folder  |");
+			printf("               folder   ");
 		}
-		printf("%3d                                       #\n", blocks[blocks[currentFileID].children[i]].fileID);
+		printf("            %d                   #\n", blocks[blocks[currentFileID].children[i]].fileID);
 	}
 	printf("#==================================================================#\n");
 	printf("#====|create| mkdir | ls | rm | sv | cd | help | clear | quit |====#\n");
