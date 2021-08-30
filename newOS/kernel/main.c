@@ -718,7 +718,7 @@ void gradualStart()
 
 void Loading()
 {
-	printf("System is loading...");
+	printf("...");
 
 	for (int i = 0; i < 25; ++i)
 	{
