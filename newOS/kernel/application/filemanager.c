@@ -71,7 +71,7 @@ void runFileManage(int fd_stdin)
 		{
 			target[i] = rdbuf[i];
 		}
-		if (rdbuf[0] == 'c' && rdbuf[1] == 'r' && rdbuf[2] == 'e' && rdbuf[3] == 'a' && rdbuf[4] == 't'&& rdbuf[5] == 'e')
+		if (rdbuf[0] == 'c' && rdbuf[1] == 'r' && rdbuf[2] == 'e' && rdbuf[3] == 'a' && rdbuf[4] == 't' && rdbuf[5] == 'e')
 		{
 			if (rdbuf[6] != ' ')
 			{
@@ -461,15 +461,15 @@ void showFileList()
 {
 	printf("The elements in %s.\n", blocks[currentFileID].fileName); //通过currentFileID获取当前路径s
 
-    printf("\n#==================================================================#\n");
+	printf("\n#==================================================================#\n");
 	printf("#                          Welcome to UpUpOS                       #\n");
 	printf("#            --------------- File Manager ---------------          #\n");
 	printf("#                                                                  #\n");
 	printf("#  filename      type     id                                       #\n");
-	
+
 	for (int i = 0; i < blocks[currentFileID].childrenNumber; i++)
 	{ //遍历每个孩子
-	    printf("#");
+		printf("#");
 		printf("%10s", blocks[blocks[currentFileID].children[i]].fileName);
 		if (blocks[blocks[currentFileID].children[i]].fileType == 0)
 		{
@@ -528,28 +528,29 @@ void DeleteFile(int ID)
 
 void ShowMessage()
 {
-	printf("      #==================================================================#\n");
-	printf("      #                                         Welcome to               #\n");
-	printf("      #  ***     ***                               UpUpOS                #\n");
-	printf("      #  ***     ***                                                     #\n");
-	printf("      #  ***     ***  *********           <file Manager help>            #\n");
-	printf("      #  ***     ***  **       **     You can manage the process here    #\n");
-	printf("      #   *********   **       **                                        #\n");
-	printf("      #               **       **                                        #\n");
-	printf("      #               **********   [OPTION LIST]                         #\n");
-	printf("      #               **      create [filename] ->create a new .txt file #\n");
-	printf("      #  ***     ***  **      mkdir [dirname] -> create a new folder     #\n");
-	printf("      #  ***     ***          ls -> list the elements in this level      #\n");
-	printf("      #  ***     ***          cd [dirname] -> switch work path           #\n");
-	printf("      #  ***     *** ********* to this directory(input ..return to the   #\n");
-	printf("      #   *********  **       **     superior directory)                 #\n");
-	printf("      #              **       ** rm [name] -> delete a file or directory #\n");
-	printf("      #              **       ** clear ->  clear the cmd                 #\n");
-	printf("      #              **********  help -> show command list of this system#\n");
-	printf("      #              **          sv   -> save file                       #\n");
-	printf("      #              **          quit -> quit system                     #\n");
-	printf("      #==================================================================#\n");
+	
 
+	printf("================================================================================");
+	printf("                                                                                ");
+	printf("  ***     ***                                  UpUpOS                           ");
+	printf("  ***     ***                                                                   ");
+	printf("  ***     ***  *********     DESCRIPTION                                        ");
+	printf("  ***     ***  **       **       cd [dirname]    switch work path to this       ");
+	printf("   *********   **       **                       directory                      ");
+	printf("               **       **                                                      ");
+	printf("               **********        create [filename]    create a new .txt file    ");
+	printf("               **                rm [name]    delete a file or directory        ");
+	printf("  ***     ***  **                mkdir [dirname]    create a new folder         ");
+	printf("  ***     ***                    sv    save a file                              ");
+	printf("  ***     ***                    ls    list the elements in this level          ");
+	printf("  ***     *** *********          help    show command list of file system       ");
+	printf("   *********  **       **        quit    quit systemmonth                       ");
+	printf("              **       **        clear    clear the page                        ");
+	printf("              **       **                                                       ");
+	printf("              **********                                                        ");
+	printf("              **                                                                ");
+	printf("              **                                                                ");
+	printf("================================================================================");
 
 	printf("\n\n");
 }

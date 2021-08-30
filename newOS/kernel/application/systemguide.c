@@ -91,7 +91,7 @@ void runApp(fd_stdin, fd_stdout)
         if (strcmp(rdbuf, "5") == 0)
         {
             clear();
-            
+
             return;
         }
         else if (strcmp(rdbuf, "1") == 0)
@@ -140,7 +140,7 @@ void systemUsage(fd_stdin, fd_stdout)
     printf("applications: \n1. calculator\n2.calendar\n\n");
     printf("games: \n1. colorball\n2. fivechess\n3.draughts\n4.mine\n5.sudoku\n\n");
     printf("To run these applications, you can input the command straight away, \nor if you are not familiar with the commands, try using the guide!\n");
-    
+
     printf("\nPress ANY key to continue!");
     char rdbuf[128];
     int r = read(fd_stdin, rdbuf, 70);
@@ -149,7 +149,13 @@ void systemUsage(fd_stdin, fd_stdout)
 
 void systemInfo(fd_stdin, fd_stdout)
 {
-    
+    clear();
+    printf("UpUpOS is developed by UpUpOS project, ALL RIGHT RESERVED.\n\n");
+
+    printf("\nPress ANY key to continue!");
+    char rdbuf[128];
+    int r = read(fd_stdin, rdbuf, 70);
+    clear();
 
 }
 
@@ -197,6 +203,7 @@ void runSystemGuide(fd_stdin, fd_stdout)
         }
         else if (strcmp(rdbuf, "4") == 0)
         {
+            systemInfo(fd_stdin, fd_stdout);
         }
         else
         {
