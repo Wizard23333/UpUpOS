@@ -17,14 +17,11 @@
 
 #include "time.h"
 #include "termio.h"
-// #include "bits/signum.h"
 #include "signal.h"
 #include "sys/time.h"
 
-#define DELAY_TIME 6000 //延迟时间
+#define DELAY_TIME 6000
 #define NULL ((void *)0)
-
-// my code here
 
 /*======================================================================*
 							kernel_main
@@ -136,8 +133,6 @@ PUBLIC int get_ticks()
  *======================================================================*/
 void TestA()
 {
-	int fd;
-	int i, n;
 
 	char tty_name[] = "/dev_tty0";
 
@@ -149,22 +144,16 @@ void TestA()
 	int fd_stdout = open(tty_name, O_RDWR);
 	assert(fd_stdout == 1);
 
-	//	char filename[MAX_FILENAME_LEN+1] = "zsp01";
-	const char bufw[80] = {0};
-
 	clear();
-
-	/*================================= 这里是开机动画 ===============================*/
 
 	Loading();
 
 	Booting();
 
 	clear();
-	/*================================= 这里是显示在上面的系统信息 ===============================*/
 
-	CommandList();
-	int year = 2021, month = 9, day = 1; //日历需要的全局变量
+	HomePage();
+
 	while (1)
 	{
 
@@ -185,7 +174,7 @@ void TestA()
 		if (!strcmp(command4, "home"))
 		{
 			clear();
-			CommandList();
+			HomePage();
 		}
 		else if (!strcmp(command5, "clear"))
 		{
@@ -232,6 +221,7 @@ void TestA()
 		}
 		else if (!strcmp(command3, "cal"))
 		{
+			int year = 2021, month = 9, day = 1; //日历需要的全局变量
 			if (strlen(rdbuf) > 4)
 			{
 				calendar(rdbuf + 4, &year, &month, &day);
@@ -265,8 +255,6 @@ void TestA()
 		else
 		{
 			clear();
-			/*================================= 这里是命令不存在的提示信息 ===============================*/
-
 			NotFound();
 		}
 	}
@@ -333,18 +321,14 @@ void mystrncpy(char *dest, char *src, int len)
 	}
 }
 
-/*开机动画*/
 void Booting()
 {
-	emptyWindow();
-
-	gradualStart();
-	emptyWindow();
-
-	// gradualBoot();
+	blankWindow();
+	frameStart();
+	blankWindow();
 }
 
-void emptyWindow()
+void blankWindow()
 {
 	printf("                                                                                ");
 	printf("                                                                                ");
@@ -374,7 +358,7 @@ void emptyWindow()
 	milli_delay(DELAY_TIME);
 	clear();
 }
-void gradualStart()
+void frameStart()
 {
 
 	for (int i = 0; i < 2; i++)
@@ -728,8 +712,8 @@ void Loading()
 	}
 }
 
-/*所有指令 & help窗口*/
-void CommandList()
+// 主菜单界面
+void HomePage()
 {
 	printf("================================================================================");
 	printf("                                                                                ");
@@ -756,7 +740,7 @@ void CommandList()
 	printf("\n\n");
 }
 
-/*没找到该指令窗口*/
+// 未找到指令界面
 void NotFound()
 {
 	printf("================================================================================");
@@ -975,59 +959,58 @@ void manMain(char *option)
 	else if (!strcmp(option, "filemgr"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #         *******                         Welcome to               #\n");
-		printf("      #            **                            cherryOS                #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                 <COMMAND --- file>              #\n");
-		printf("      #   ****      **  **             You can do file management        #\n");
-		printf("      #            **    **          at our File Management System.      #\n");
-		printf("      #        ******     ****       You can also use [Ctrl+F2] to       #\n");
-		printf("      #      **********  ******   enter into our File Management System. #\n");
-		printf("      #      **********   ****                                           #\n");
-		printf("      #        ******             [COMMAND LIST]                         #\n");
-		printf("      #                           touch [filename]  |   mkdir [dirname]  #\n");
-		printf("      #                                  ls         |       help         #\n");
-		printf("      #                             cd [dirname]    |       cd ..        #\n");
-		printf("      #                             rm [filename]   |  rm -r [dirname]   #\n");
-		printf("      #                                 clear       |       quit         #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
-		printf("      ====================================================================\n");
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     DESCRIPTION                                        ");
+		printf("  ***     ***  **       **       cd [dirname]    switch work path to this       ");
+		printf("   *********   **       **                       directory                      ");
+		printf("               **       **                                                      ");
+		printf("               **********        create [filename]    create a new .txt file    ");
+		printf("               **                rm [name]    delete a file or directory        ");
+		printf("  ***     ***  **                mkdir [dirname]    create a new folder         ");
+		printf("  ***     ***                    sv    save a file                              ");
+		printf("  ***     ***                    ls    list the elements in this level          ");
+		printf("  ***     *** *********          help    show command list of file system       ");
+		printf("   *********  **       **        quit    quit systemmonth                       ");
+		printf("              **       **        clear    clear the page                        ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else if (!strcmp(option, "systemguide"))
 	{
 		clear();
-		printf("      ====================================================================\n");
-		printf("      #         *******                                                  #\n");
-		printf("      #            **                                                    #\n");
-		printf("      #        ***  **                                                   #\n");
-		printf("      #     ******   **                                                  #\n");
-		printf("      #   ******      **                                                 #\n");
-		printf("      #   ****      **  **                                               #\n");
-		printf("      #            **    **                                              #\n");
-		printf("      #        ******     ****                                           #\n");
-		printf("      #      **********  ******                                          #\n");
-		printf("      #      **********   ****                                           #\n");
-		printf("      #        ******                                                    #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #                                                                  #\n");
-		printf("      #               Powered by doubleZ, budi, flyingfish               #\n");
-		printf("      #                       ALL RIGHT REVERSED                         #\n");
-		printf("      ====================================================================\n");
+		printf("================================================================================");
+		printf("                                                                                ");
+		printf("  ***     ***                                  UpUpOS                           ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***  *********     NAME                                               ");
+		printf("  ***     ***  **       **        systemguide -- open the guide application     ");
+		printf("   *********   **       **                       to help use UpUpOS             ");
+		printf("               **       **   SYNOPSIS                                           ");
+		printf("               **********         systemguide []                                ");
+		printf("               **                                                               ");
+		printf("  ***     ***  **                                                               ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     ***                                                                   ");
+		printf("  ***     *** *********                                                         ");
+		printf("   *********  **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **       **                                                       ");
+		printf("              **********                                                        ");
+		printf("              **                                                                ");
+		printf("              **                                                                ");
+		printf("================================================================================");
 	}
 	else
 	{
 		printf("Sorry, there is no such command for man\n");
 		printf("Why not just try using \" man home \"\n");
 	}
-
 	printf("\n");
 }
 
