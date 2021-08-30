@@ -622,7 +622,7 @@ void ShowMessage()
 	printf("  ***     ***  *********     DESCRIPTION                                        ");
 	printf("  ***     ***  **       **       cd [dirname]    switch work path to this       ");
 	printf("   *********   **       **                       directory                      ");
-	printf("               **       **                                                      ");
+	printf("               **       **       read [filename]    read a .txt file            ");
 	printf("               **********        create [filename]    create a new .txt file    ");
 	printf("               **                rm [name]    delete a file or directory        ");
 	printf("  ***     ***  **                mkdir [dirname]    create a new folder         ");
@@ -631,7 +631,7 @@ void ShowMessage()
 	printf("  ***     *** *********          help    show command list of file system       ");
 	printf("   *********  **       **        quit    quit systemmonth                       ");
 	printf("              **       **        clear    clear the page                        ");
-	printf("              **       **                                                       ");
+	printf("              **       **        write [filename] [content]  write a .txt file  ");
 	printf("              **********                                                        ");
 	printf("              **                                                                ");
 	printf("              **                                                                ");
