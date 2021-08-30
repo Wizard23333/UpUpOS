@@ -548,7 +548,7 @@ void showFileList()
 
     printf("\n#==================================================================#\n");
 	printf("#                          Welcome to UpUpOS                       #\n");
-	printf("#            --------------- File Manager ---------------          #\n");
+	printf("#            --------------- File    List ---------------          #\n");
 	printf("#                                                                  #\n");
 	printf("#  filename                type               id                   #\n");
 	
@@ -567,7 +567,7 @@ void showFileList()
 		printf("            %d                   #\n", blocks[blocks[currentFileID].children[i]].fileID);
 	}
 	printf("#==================================================================#\n");
-	printf("#====|create| mkdir | ls | rm | sv | cd | help | clear | quit |====#\n");
+	printf("#====|create|mkdir|read|write|ls |rm |sv | cd |help|clear|quit|====#\n");
 	printf("#==================================================================#\n\n");
 }
 
