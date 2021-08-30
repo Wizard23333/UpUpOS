@@ -284,8 +284,8 @@
   4. 每当玩家移动棋子后，棋盘随机在三个位置生成三个随机棋子.
   5. 每当横竖或斜向组成5个及以上同色棋子时，棋子消除，消除5个棋子得10分，在此基础上每多一个额外加2分，并且能够额外获得一次移动棋子的机会.
   6. 当所有棋盘都被棋子填满后游戏结束，给出得分
-
-  **功能展示**
+  
+    **功能展示**
 
   ​        进入游戏，选择初始棋子数——game -colorball:
 
@@ -300,6 +300,30 @@
   <img src="README.assets/image-20210829210815945.png" alt="image-20210829210815945" style="zoom:80%;" />
 
 + **国际跳棋**
+
+  + 游戏规则：
+
+    本跳棋规则是标准国际跳棋规则的简化版
+
+    + 对局采用 8 * 8 棋盘
+    + 对局开始时，每⽅方各12颗棋子，摆放在最下或者最上的三行中
+    + 黑子先行，双⽅轮流操作。每次操作，可以移动⾃己的一枚棋子到周围的空棋位，移动的方向为向前的2个斜线⽅向，每次只能移动⼀格
+
+  + 输入`game -draughts`进入游戏，
+
+  + 输入`Y/n`选择先手还是后手
+
+    ![截屏2021-08-30 上午11.36.01](README.assets/截屏2021-08-30 上午11.36.01.png)
+
+    ![截屏2021-08-30 上午11.37.37](README.assets/截屏2021-08-30 上午11.37.37.png)
+
+  + 输入移动棋子的步数和坐标
+
+    ![截屏2021-08-30 上午11.39.13](README.assets/截屏2021-08-30 上午11.39.13.png)
+
+  + 等待AI完成下棋，继续输入下一步的下子
+
+    ![截屏2021-08-30 上午11.39.49](README.assets/截屏2021-08-30 上午11.39.49.png)
 
 + **经典扫雷**
 
@@ -471,9 +495,98 @@ void release();
   
   ```
 
-  
-
 + **国际跳棋**
+
+  + AI实现主要思路：
+
+    首先进行6层深度的行棋模拟，在每一种的情况完成后，通过估值函数来计算每一种情况的好坏，从所有的情况种选择能导致最好的情况的来走下一步
+
+  + 估值函数：
+
+    ```c
+    int valueCase()
+    {
+        int valueOfCase = 0;
+        int k1 = -10, k2 = 10, k3 = 30, k6 = 1, k7 = -20;
+        int numMyKing = 0, numEneKing = 0;
+        for (int i1 = 0; i1 <= BOARD_SIZE - 1; i1++) //前进
+        {
+            for (int i2 = 0; i2 <= BOARD_SIZE - 1; i2++)
+            {
+                if (board[i1][i2] == MY_FLAG)
+                {
+                    valueOfCase += k6 * i1;
+                }
+                else if (board[i1][i2] == MY_KING)
+                {
+                    numMyKing++;
+                }
+                else if (board[i1][i2] == ENEMY_KING)
+                {
+                    numEneKing++;
+                }
+            }
+        }
+        valueOfCase += numEneKing * k7 + numMyKing * k3 + numMyFlag * k2 + numEneFlag * k1;
+        return valueOfCase;
+    }
+    ```
+
+  + 行棋计算函数
+
+    ```c
+    Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
+    {
+        int maxValue = -10000;
+        int numChecked = 0;
+        int maxStep = 1;
+        bool jumpOrNot = false;
+        Command command = {.x = {0}, .y = {0}, .numStep = 0};
+        for (int i = 0; i < BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < BOARD_SIZE; j++)
+            {
+                if (board[i][j] > 0 && (board[i][j] & 1) == 0) //如果是己方棋子
+                {
+                    numChecked++;
+                    longestJumpCmd.numStep = 1;
+                    bool jumpNot = tryToJump(i, j, 0);
+                    if (longestJumpCmd.numStep >= maxStep && jumpNot) //把最长跳方法储存到command//判断在该点能不能跳
+                    {
+                        jumpOrNot = true;
+                        int tempValue = 0;
+                        Command temp = longestJumpCmd;
+                        tempValue = enemyTry(DEPTH, &longestJumpCmd);
+                        if (tempValue > maxValue || temp.numStep > maxStep)
+                        {
+                            maxValue = tempValue;
+                            maxStep = temp.numStep;
+                            command = temp;
+                        }
+                    }
+                    if (jumpOrNot == false && tryToMove(i, j) >= 0) //如果没跳成
+                    {
+                        int tempValue = 0;
+                        Command temp = moveCmd;
+                        tempValue = enemyTry(DEPTH, &moveCmd);
+                        if (tempValue > maxValue)
+                        {
+                            maxValue = tempValue;
+                            command = temp;
+                        }
+                    }
+                }
+                if (numChecked >= numMyFlag) //如果我的棋子数完返回
+                {
+                    return command;
+                }
+            }
+        }
+        return command;
+    }
+    ```
+
+    
 
 + **经典扫雷**
 
