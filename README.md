@@ -189,11 +189,25 @@
 
 ### 2.3 系统引导程序
 
-系统引导程序，通过在主菜单输入`systemguide`命令进入
+系统引导程序，便于初次使用的用户来使用该操作系统，通过在主菜单输入`systemguide`命令进入
 
+![截屏2021-08-31 上午11.24.25](README.assets/%E6%88%AA%E5%B1%8F2021-08-31%20%E4%B8%8A%E5%8D%8811.24.25.png)
 
++ 输入`1`进入显示UpUpOS的基本使用信息，按任意键退出
 
+  ![截屏2021-08-31 上午11.29.05](README.assets/%E6%88%AA%E5%B1%8F2021-08-31%20%E4%B8%8A%E5%8D%8811.29.05.png)
+  
++ 输入`2`进入系统游戏菜单，可以选择一个游戏运行
 
+  ![截屏2021-08-31 上午11.32.15](README.assets/%E6%88%AA%E5%B1%8F2021-08-31%20%E4%B8%8A%E5%8D%8811.32.15.png)
+
++ 输入`3`进入应用菜单，可以选择一个系统应用运行
+
+  ![截屏2021-08-31 上午11.33.10](README.assets/%E6%88%AA%E5%B1%8F2021-08-31%20%E4%B8%8A%E5%8D%8811.33.10.png)
+
++ 输入`4`进入系统信息菜单
+
+  ![截屏2021-08-31 上午11.34.03](README.assets/%E6%88%AA%E5%B1%8F2021-08-31%20%E4%B8%8A%E5%8D%8811.34.03-0381021.png)
 
 ### 2.4 系统级应用
 
@@ -250,6 +264,10 @@
 <img src="README.assets/image-20210829220141155.png" alt="image-20210829220141155" style="zoom:80%;" />
 
 #### 2.4.3 系统引导程序
+
+此处与2.3保持一致
+
+点击跳转到[2.3](#23-系统引导程序)
 
 ### 2.5 用户级应用
 
@@ -340,17 +358,17 @@
 
   + 输入`Y/n`选择先手还是后手
 
-    ![截屏2021-08-30 上午11.36.01](./README.assets/截屏2021-08-30 上午11.36.01.png)
+    ![截屏2021-08-30 上午11.36.01](./README.assets/11.36.01.png)
 
-    ![截屏2021-08-30 上午11.37.37](./README.assets/截屏2021-08-30 上午11.37.37.png)
+    ![截屏2021-08-30 上午11.37.37](./README.assets/11.37.37.png)
 
   + 输入移动棋子的步数和坐标
 
-    ![截屏2021-08-30 上午11.39.13](./README.assets/截屏2021-08-30 上午11.39.13.png)
+    ![截屏2021-08-30 上午11.39.13](./README.assets/11.39.13.png)
 
   + 等待AI完成下棋，继续输入下一步的下子
 
-    ![截屏2021-08-30 上午11.39.49](./README.assets/截屏2021-08-30 上午11.39.49.png)
+    ![11.39.49](./README.assets/11.39.49.png)
 
 + **经典扫雷**
 
@@ -393,6 +411,137 @@ void release();
 
 
 #### 3.1.3 系统引导程序
+
+**部分代码示例**
+
+```c
+void runSystemGuide(fd_stdin, fd_stdout)
+{
+    while (1)
+    {
+        printf("Welcome to UpUpOS's system guide! Here you can choose what you want to do or look up.\n\n");
+        printf("1. Usage for system partterns\n");
+        printf("2. Choose a game to play\n");
+        printf("3. Run an application\n");
+        printf("4. UpUpOS's information\n");
+        printf("5. Quit now\n\n");
+        printf("Please choose one: [4] ");
+
+        char rdbuf[128];
+        int r = read(fd_stdin, rdbuf, 70);
+        rdbuf[r] = 0;
+        while (r < 1)
+        {
+            r = read(fd_stdin, rdbuf, 70);
+            rdbuf[r] = 0;
+        }
+
+        if (strcmp(rdbuf, "5") == 0)
+        {
+            clear();
+            return;
+        }
+        else if (strcmp(rdbuf, "1") == 0)
+        {
+            clear();
+            systemUsage(fd_stdin, fd_stdout);
+        }
+        else if (strcmp(rdbuf, "2") == 0)
+        {
+            clear();
+            runGame(fd_stdin, fd_stdout);
+        }
+        else if (strcmp(rdbuf, "3") == 0)
+        {
+            clear();
+            runApp(fd_stdin, fd_stdout);
+        }
+        else if (strcmp(rdbuf, "4") == 0)
+        {
+            systemInfo(fd_stdin, fd_stdout);
+        }
+        else
+        {
+            printf("Please input a valid number!\nPress ANY key to continue!");
+            int r = read(fd_stdin, rdbuf, 70);
+            clear();
+            continue;
+        }
+    }
+}
+```
+
+
+
+```c
+void runApp(fd_stdin, fd_stdout)
+{
+    clear();
+
+    while (1)
+    {
+        printf("UpUpOS has the applications below, please choose one to run:\n");
+        printf("1. processmanager\n");
+        printf("2. file manager\n");
+        printf("3. calculator\n");
+        printf("4. calendar\n");
+        printf("5. Quit now\n\n");
+        printf("Please choose one: [4] ");
+
+        char rdbuf[128];
+        int r = read(fd_stdin, rdbuf, 70);
+        rdbuf[r] = 0;
+        while (r < 1)
+        {
+            r = read(fd_stdin, rdbuf, 70);
+            rdbuf[r] = 0;
+        }
+
+        if (strcmp(rdbuf, "5") == 0)
+        {
+            clear();
+
+            return;
+        }
+        else if (strcmp(rdbuf, "1") == 0)
+        {
+            clear();
+            runProcessManage(fd_stdin);
+            return;
+        }
+        else if (strcmp(rdbuf, "2") == 0)
+        {
+            clear();
+            runFileManage(fd_stdin);
+            return;
+        }
+        else if (strcmp(rdbuf, "3") == 0)
+        {
+            clear();
+            manMain("calculate");
+
+            printf("\nPress ANY key to continue!");
+            int r = read(fd_stdin, rdbuf, 70);
+            return;
+        }
+        else if (strcmp(rdbuf, "4") == 0)
+        {
+            clear();
+            char *str = "NULL";
+            int year = 2019, month = 9, day = 1;
+            calendar(str, year, month, day);
+            return;
+        }
+        else
+        {
+            printf("Please input a valid number!\nPress ANY key to continue!");
+            int r = read(fd_stdin, rdbuf, 70);
+            clear();
+            continue;
+        }
+    }
+}
+```
 
 ### 3.2 用户级应用
 

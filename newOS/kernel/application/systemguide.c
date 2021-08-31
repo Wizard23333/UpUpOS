@@ -83,7 +83,7 @@ void runApp(fd_stdin, fd_stdout)
         printf("2. file manager\n");
         printf("3. calculator\n");
         printf("4. calendar\n");
-        printf("5. Quit now");
+        printf("5. Quit now\n\n");
         printf("Please choose one: [4] ");
 
         char rdbuf[128];
@@ -205,7 +205,6 @@ void runSystemGuide(fd_stdin, fd_stdout)
         {
             clear();
             runApp(fd_stdin, fd_stdout);
-            // return;
         }
         else if (strcmp(rdbuf, "4") == 0)
         {
