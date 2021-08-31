@@ -357,28 +357,10 @@ int Cal(int left, char op, int right)
 
 
 
-/*============ 计算后缀表达式的结果 ============*/
-int calResult(struct Data result[], int size)
-{
-	num_stack_clear();
-	for (int i = 0; i < size; ++i)
-	{
-		if (result[i].flag == 1)
-		{
-			num_stack_push(result[i].data);
-		}
-		else
-		{
-			int right = num_stack_pop();
-			int left = num_stack_pop();
-			num_stack_push(Cal(left, result[i].data, right));
-		}
-	}
-	return num_stack_pop();
-}
+
 
 /*============ 顶层计算函数 ============*/
-int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
+int calculate(char* origin_exp)
 {
 	/*============ 表达式美化 ============*/
 	char exp[100] = "\0";
@@ -401,19 +383,14 @@ int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
 		}
 	}
 
-	if (if_beauty)
-	{
-		printf("After beautify: %s\n", exp);
-	}
+
 
 	/*初始两个栈*/
 	num_stack_clear();
 	op_stack_clear();
 	_current = 0;
 
-	struct Data result[100];
-	int index = 0;
-
+	int temp = 0;
 	/*在表达式尾部添加结束标识符*/
 	addTail(exp);
 
@@ -425,12 +402,19 @@ int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
 
 		if (elem.flag == 1)
 		{ //如果是操作数, 直接读入下一个内容
-			result[index] = elem;
-			index++;
+			
+			if (temp == 1) {
+				int a = num_stack_pop();
+				num_stack_push(a*10+ elem.data);
+			}
+			else
+				num_stack_push(elem.data);
+			temp = 1;
 			elem = NextContent(exp);
 		}
 		else if (elem.flag == 0)
 		{ //如果是操作符,判断ch的优先级icp和当前栈顶操作符的优先级isp
+			temp = 0;
 			char topch = op_stack_top();
 			if (isp(topch) < icp(ch))
 			{ //当前操作符优先级大,将ch压栈,读入下一个内容
@@ -442,8 +426,10 @@ int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
 				struct Data buf;
 				buf.data = op_stack_pop();
 				buf.flag = 0;
-				result[index] = buf;
-				index++;
+
+				int right = num_stack_pop();
+				int left = num_stack_pop();
+				num_stack_push(Cal(left, buf.data, right));
 			}
 			else
 			{
@@ -456,10 +442,11 @@ int calculate(char *origin_exp, bool if_showrev, bool if_beauty)
 		}
 	}
 
-	
 
-	return calResult(result, index);
+	return num_stack_pop();
+	
 }
+
 
 /*判断表达式括号是否匹配*/
 bool check_exp_bucket(char *exp)
