@@ -20,6 +20,8 @@ void runGame(fd_stdin, fd_stdout)
         printf("1. colorball\n");
         printf("2. fivechess\n");
         printf("3. draughts\n");
+        printf("4. mine\n");
+        printf("5. sudoku\n");
         printf("6. Quit now\n");
         printf("Please choose one: [5] ");
 
@@ -54,6 +56,11 @@ void runGame(fd_stdin, fd_stdout)
         }
         else if (strcmp(rdbuf, "4") == 0)
         {
+            runMine(fd_stdin, fd_stdout);
+        }
+        else if (strcmp(rdbuf, "5") == 0)
+        {
+            runSudoku(fd_stdin, fd_stdout);
         }
         else
         {
@@ -156,7 +163,6 @@ void systemInfo(fd_stdin, fd_stdout)
     char rdbuf[128];
     int r = read(fd_stdin, rdbuf, 70);
     clear();
-
 }
 
 void runSystemGuide(fd_stdin, fd_stdout)
