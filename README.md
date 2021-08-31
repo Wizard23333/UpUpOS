@@ -13,7 +13,7 @@
 
 + 1954091 胡相乾
 
-+ 
++ 1953486 王绍杰
 
 ## 目录
 
@@ -91,13 +91,23 @@
 
 + #### 刘心宇
 
-
+  + 进程管理系统
+  + 五子连珠游戏
+  + 日历应用
+  + 项目文档
+  + 系统标志设计
 
 + #### 王绍杰
-
-
+  + 经典扫雷游戏
+  + 数独游戏
+  + 项目文档
 
 + #### 胡相乾
+
+  + 四则计算器
+  + 五子棋游戏
+  + 文件管理系统
+  + 项目文档
 
 
 
@@ -517,72 +527,74 @@
 
 部分代码演示
 
-        void WriteDisk(int len)
-    {
-    	char temp[MAX_FILE_NUM * 150 + 103];
-    	int i = 0;
-    	temp[i] = '^';
-    	i++;
-    	toStr3(temp + i, fileIDCount);
-    	i = i + 3;
-    	temp[i] = '^';
-    	i++;
-    	for (int j = 0; j < MAX_FILE_NUM; j++)
-    	{
-    		if (IDLog[j] == 1)
-    		{
-    			toStr3(temp + i, blocks[j].fileID);
-    			i = i + 3;
-    			temp[i] = '^';
-    			i++;
-    			for (int h = 0; h < strlen(blocks[j].fileName); h++)
-    			{
-    				temp[i + h] = blocks[j].fileName[h];
-    				if (blocks[j].fileName[h] == '^')
-    					temp[i + h] = (char)1;
-    			}
-    			i = i + strlen(blocks[j].fileName);
-    			temp[i] = '^';
-    			i++;
-    			temp[i] = (char)(blocks[j].fileType + 48);
-    			i++;
-    			temp[i] = '^';
-    			i++;
-    			for (int h = 0; h < strlen(blocks[j].content); h++)
-    			{
-    				temp[i + h] = blocks[j].content[h];
-    				if (blocks[j].content[h] == '^')
-    					temp[i + h] = (char)1;
-    			}
-    			i = i + strlen(blocks[j].content);
-    			temp[i] = '^';
-    			i++;
-    			toStr3(temp + i, blocks[j].fatherID);
-    			i = i + 3;
-    			temp[i] = '^';
-    			i++;
-    			for (int m = 0; m < MAX_FILE_PER_LAYER; m++)
-    			{
-    				toStr3(temp + i, blocks[j].children[m]);
-    				i = i + 3;
-    			}
-    			temp[i] = '^';
-    			i++;
-    			toStr3(temp + i, blocks[j].childrenNumber);
-    			i = i + 3;
-    			temp[i] = '^';
-    			i++;
-    		}
-    	}
-    	int fd = 0;
-    	int n1 = 0;
-    	fd = open("ss", O_RDWR);
-    	assert(fd != -1);
-    	n1 = write(fd, temp, strlen(temp));
-    	assert(n1 == strlen(temp));
-    	close(fd);
-    }
+```c
+    void WriteDisk(int len)
+{
+	char temp[MAX_FILE_NUM * 150 + 103];
+	int i = 0;
+	temp[i] = '^';
+	i++;
+	toStr3(temp + i, fileIDCount);
+	i = i + 3;
+	temp[i] = '^';
+	i++;
+	for (int j = 0; j < MAX_FILE_NUM; j++)
+	{
+		if (IDLog[j] == 1)
+		{
+			toStr3(temp + i, blocks[j].fileID);
+			i = i + 3;
+			temp[i] = '^';
+			i++;
+			for (int h = 0; h < strlen(blocks[j].fileName); h++)
+			{
+				temp[i + h] = blocks[j].fileName[h];
+				if (blocks[j].fileName[h] == '^')
+					temp[i + h] = (char)1;
+			}
+			i = i + strlen(blocks[j].fileName);
+			temp[i] = '^';
+			i++;
+			temp[i] = (char)(blocks[j].fileType + 48);
+			i++;
+			temp[i] = '^';
+			i++;
+			for (int h = 0; h < strlen(blocks[j].content); h++)
+			{
+				temp[i + h] = blocks[j].content[h];
+				if (blocks[j].content[h] == '^')
+					temp[i + h] = (char)1;
+			}
+			i = i + strlen(blocks[j].content);
+			temp[i] = '^';
+			i++;
+			toStr3(temp + i, blocks[j].fatherID);
+			i = i + 3;
+			temp[i] = '^';
+			i++;
+			for (int m = 0; m < MAX_FILE_PER_LAYER; m++)
+			{
+				toStr3(temp + i, blocks[j].children[m]);
+				i = i + 3;
+			}
+			temp[i] = '^';
+			i++;
+			toStr3(temp + i, blocks[j].childrenNumber);
+			i = i + 3;
+			temp[i] = '^';
+			i++;
+		}
+	}
+	int fd = 0;
+	int n1 = 0;
+	fd = open("ss", O_RDWR);
+	assert(fd != -1);
+	n1 = write(fd, temp, strlen(temp));
+	assert(n1 == strlen(temp));
+	close(fd);
 }
+```
+
 
 #### 3.1.2 进程管理
 
@@ -1083,7 +1095,7 @@ int iffine(int inx, int iny, int tox, int toy); //判断输入是否合法
 
 递归查找周围num为0的格子
 
-```
+```c
 void find_zero(int x, int y)  //递归函数 查找x y周围相邻的所有num为0的地区
 {
 	if (room[x][y].found == 1) {
@@ -1121,7 +1133,7 @@ void find_zero(int x, int y)  //递归函数 查找x y周围相邻的所有num�
 ```
 根据雷的位置更新结构体中的num值
 
-```
+```c
 void room_update_num() //根据雷的位置更新room中的num属性
 {
 	int i, j;
@@ -1166,103 +1178,107 @@ void room_update_num() //根据雷的位置更新room中的num属性
 
 回溯法产生解的函数
 
-		void answer_maker()   //产生答案
-	{
-		int i, j ;
-		              //首先随机产生1的所有位置
-		for (i=0; i < 9; i++) {
-				if (judge222(1,i,x%9)==1) {
-					answer[i][x % 9] = 1;
-				}
-				else {
-					i--;
-				}
-				x++;
-		}
-		struct room first[9][9];
-		for (i = 0; i < 9;i++) {
-			for (j = 0; j < 9; j++) {
-				first[i][j].figure = i+1;
-				first[i][j].x = j;
-				first[i][j].y = -1;
-			}
-		}
-		i = 1, j = 0;
-		first[i][j].figure = 2;
-		first[i][j].x = 0;
-		first[i][j].y = -1;
-		while (1) {
-			if (find_next(first[i][j].figure, first[i][j].x, first[i][j].y) != -1) {
-				if (first[i][j].y != -1) {
-					answer[first[i][j].x][first[i][j].y] = 0;
-				}
-	
-				first[i][j].y = find_next(first[i][j].figure, first[i][j].x, first[i][j].y);
-				answer[first[i][j].x][first[i][j].y] = first[i][j].figure;
-				if (i == 8 && j == 8) {
-					break;
-				}
-				if (j == 8) {
-					j = 0;
-					i++;
-				}
-				else {
-					j++;
-				}
+```c
+	void answer_maker()   //产生答案
+{
+	int i, j ;
+	              //首先随机产生1的所有位置
+	for (i=0; i < 9; i++) {
+			if (judge222(1,i,x%9)==1) {
+				answer[i][x % 9] = 1;
 			}
 			else {
-				if (first[i][j].y != -1) {
-					answer[first[i][j].x][first[i][j].y] = 0;
-				}
-				first[i][j].y = -1;
-				if (j==0) {
-					i--;
-					j = 8;
-				}
-				else {
-					j--;
-				}
+				i--;
+			}
+			x++;
+	}
+	struct room first[9][9];
+	for (i = 0; i < 9;i++) {
+		for (j = 0; j < 9; j++) {
+			first[i][j].figure = i+1;
+			first[i][j].x = j;
+			first[i][j].y = -1;
+		}
+	}
+	i = 1, j = 0;
+	first[i][j].figure = 2;
+	first[i][j].x = 0;
+	first[i][j].y = -1;
+	while (1) {
+		if (find_next(first[i][j].figure, first[i][j].x, first[i][j].y) != -1) {
+			if (first[i][j].y != -1) {
+				answer[first[i][j].x][first[i][j].y] = 0;
+			}
+
+			first[i][j].y = find_next(first[i][j].figure, first[i][j].x, first[i][j].y);
+			answer[first[i][j].x][first[i][j].y] = first[i][j].figure;
+			if (i == 8 && j == 8) {
+				break;
+			}
+			if (j == 8) {
+				j = 0;
+				i++;
+			}
+			else {
+				j++;
 			}
 		}
-		i = 1;
-		j = 0;
+		else {
+			if (first[i][j].y != -1) {
+				answer[first[i][j].x][first[i][j].y] = 0;
+			}
+			first[i][j].y = -1;
+			if (j==0) {
+				i--;
+				j = 8;
+			}
+			else {
+				j--;
+			}
+		}
 	}
+	i = 1;
+	j = 0;
+}
+```
 
 查找下个可选位置的函数
 
-	int find_next(int figure, int x, int y) //寻找下一个可选位置 -1表示没有可选位置了 0-8表示可选位置的y值
-	{
-		int i;
-		for (i=y+1;i<9;i++) {
-			if (judge222(figure,x,i)==1) {
-				return i;
-			}
+```c
+int find_next(int figure, int x, int y) //寻找下一个可选位置 -1表示没有可选位置了 0-8表示可选位置的y值
+{
+	int i;
+	for (i=y+1;i<9;i++) {
+		if (judge222(figure,x,i)==1) {
+			return i;
 		}
-		return -1;
 	}
-	int judge222(int rand,int x,int y)    // 1正确 0不正确
-	{
-		if (answer[x][y]!=0) {
-			return 0;
-		}
-		/*if (rand == answer[x][0] || rand == answer[x][1] || rand == answer[x][2] || rand == answer[x][3] || rand == answer[x][4] || rand == answer[x][5] || rand == answer[x][6] || rand == answer[x][7] || rand == answer[x][8]) {
-			return 0;
-		}*/
-		if (rand == answer[0][y] || rand == answer[1][y] || rand == answer[2][y] || rand == answer[3][y] || rand == answer[4][y] || rand == answer[5][y] || rand == answer[6][y] || rand == answer[7][y] || rand == answer[8][y]) {
-			return 0;
-		}
-		if (rand==answer[(x / 3) * 3][(y / 3)*3]|| rand == answer[(x / 3) * 3][(y / 3) * 3 +1] || rand == answer[(x / 3) * 3][(y / 3) * 3 +2] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3 +1] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3 +2] || rand == answer[(x / 3) * 3 +2][(y / 3) * 3] || rand == answer[(x / 3) * 3 +2][(y / 3) * 3 +1] || rand == answer[(x / 3)*3+2][(y / 3) * 3 +2]) {
-			return 0;
-		}
-		return 1;
-	}	
+	return -1;
+}
+int judge222(int rand,int x,int y)    // 1正确 0不正确
+{
+	if (answer[x][y]!=0) {
+		return 0;
+	}
+	/*if (rand == answer[x][0] || rand == answer[x][1] || rand == answer[x][2] || rand == answer[x][3] || rand == answer[x][4] || rand == answer[x][5] || rand == answer[x][6] || rand == answer[x][7] || rand == answer[x][8]) {
+		return 0;
+	}*/
+	if (rand == answer[0][y] || rand == answer[1][y] || rand == answer[2][y] || rand == answer[3][y] || rand == answer[4][y] || rand == answer[5][y] || rand == answer[6][y] || rand == answer[7][y] || rand == answer[8][y]) {
+		return 0;
+	}
+	if (rand==answer[(x / 3) * 3][(y / 3)*3]|| rand == answer[(x / 3) * 3][(y / 3) * 3 +1] || rand == answer[(x / 3) * 3][(y / 3) * 3 +2] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3 +1] || rand == answer[(x / 3) * 3 +1][(y / 3) * 3 +2] || rand == answer[(x / 3) * 3 +2][(y / 3) * 3] || rand == answer[(x / 3) * 3 +2][(y / 3) * 3 +1] || rand == answer[(x / 3)*3+2][(y / 3) * 3 +2]) {
+		return 0;
+	}
+	return 1;
+}	
+```
 
 
 ​		
 
 **五子棋**
 
-AI实现主要思路：
++ AI实现主要思路：
 
 首先进行1层深度的行棋模拟，假设这一步由玩家或电脑在每一种的落子完成后，通过估值函数来计算每一种情况的好坏，从所有的情况中选择能导致最好的情况的来走下一步
 
@@ -1300,7 +1316,7 @@ int check(int x, int y, char player, int mode[2])
 }
 ```
 
-估值函数：
++ 估值函数：
 
 ```c
 int computerAI()
