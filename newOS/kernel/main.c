@@ -135,7 +135,7 @@ void TestA()
 {
 
 	char tty_name[] = "/dev_tty0";
-
+	int year = 2021, month = 9, day = 1; //日历需要的全局变量
 	char rdbuf[128];
 	char command3[100], command4[100], command5[100], command9[100];
 
@@ -221,7 +221,7 @@ void TestA()
 		}
 		else if (!strcmp(command3, "cal"))
 		{
-			int year = 2021, month = 9, day = 1; //日历需要的全局变量
+			
 			if (strlen(rdbuf) > 4)
 			{
 				calendar(rdbuf + 4, &year, &month, &day);
