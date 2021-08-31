@@ -1036,6 +1036,14 @@ void gameMain(char *option, int fd_stdin, int fd_stdout)
 	{
 		fiveChess(fd_stdin);
 	}
+	else if (!strcmp(option, "-mine"))
+	{
+		runMine(fd_stdin, fd_stdout);
+	}
+	else if (!strcmp(option, "-sudoku"))
+	{
+		runSudoku(fd_stdin, fd_stdout);
+	}
 	else
 	{
 		printf("Sorry, there no such option for game.\n");
