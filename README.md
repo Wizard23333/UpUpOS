@@ -355,7 +355,7 @@
 
      帮助界面
 
-     ![5$1PUY@O$TWF46VLHL7WKS8](D:\homework\xxxOS\README.assets\5$1PUY@O$TWF46VLHL7WKS8.png)
+     ![5$1PUY@O$TWF46VLHL7WKS8](README.assets/5$1PUY@O$TWF46VLHL7WKS8.png)
 
 #### 2.5.2 游戏
 
@@ -497,6 +497,8 @@
 ​            ![2](README.assets/2.png)
 
 ## 3. 系统功能实现
+
+
 
 ### 3.1 系统级应用
 
@@ -1255,7 +1257,8 @@ void room_update_num() //根据雷的位置更新room中的num属性
 		return 1;
 	}	
 
-		
+
+​		
 
 **五子棋**
 
