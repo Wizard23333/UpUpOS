@@ -11,7 +11,7 @@
 + 1953981 吴昊天
 + 1954090 刘心宇
 
-+ 
++ 1954091 胡相乾
 
 + 
 
@@ -315,6 +315,22 @@
 
 + **四则计算器**
 
+   本应用实现对数字简单的加减乘除运算，并对错误输入有反馈，让程序不会异常退出。
+
+     **功能展示**
+
+     正常计算
+
+     ![6](README.assets/6.png)
+
+     异常提示
+
+     ![7](README.assets/7.png)
+
+     帮助界面
+
+     ![5$1PUY@O$TWF46VLHL7WKS8](D:\homework\xxxOS\README.assets\5$1PUY@O$TWF46VLHL7WKS8.png)
+
 #### 2.5.2 游戏
 
 + **Color Ball**
@@ -373,6 +389,32 @@
 + **经典扫雷**
 
 + **五子棋**
+
+  实现了经典游戏五子棋，用户可以通过输入坐标落下棋子，与人机进行游戏。
+
+    **游戏规则**
+
+    1. 棋盘大小为15X15，共有2种不同的棋子.
+    2. 玩家每次可以下一个棋子.
+    3. 目标位置必须为空，并且输入的棋子的坐标要合法.
+    4. 每当玩家落子后，电脑会根据算法，选出当前最优位置落子.
+    5. 每当任意种横竖或斜向组成5个及以上棋子时，玩家或电脑取胜.
+          6. 当一场游戏结束后，棋盘刷新
+             **功能展示**
+
+            进入游戏，输入坐标落子：
+
+    ![1](README.assets/1.png)
+
+​             一方五连时结束游戏:
+
+​           !![3](README.assets/3.png)
+
+​              ![1](README.assets/1.png)
+
+​            输入q时退出游戏:
+
+​            ![2](README.assets/2.png)
 
 ## 3. 系统功能实现
 
@@ -606,6 +648,115 @@ void runApp(fd_stdin, fd_stdout)
 
 + **四则计算器**
 
+  源码路径:kernel\application\calculate.c
+
+  **源码说明**
+
+  | 函数名称         | 返回值类型    | 函数参数                       | 作用                                 |
+  | ---------------- | ------------- | ------------------------------ | ------------------------------------ |
+  | op/num_stack_xxx | int/bool/void | int /void/char                 | 操作数或操作复相关栈的完成           |
+  | isp/icp          | int           | char op                        | 操作符优先级比较                     |
+  | isNum/isOperator | bool          | char op/num                    | 判断表达式中某个字符是数字还是操作符 |
+  | Cal              | int           | int left, char op, int right   | 计算+-*/                             |
+  | calculate        | int           | char *origin_exp               | 将表达式中数字和符号分别放到两个栈中,并完成计算 |
+  | check_exp_bucket | bool          | char *exp                      | 判断表达式括号是否匹配               |
+  | check_exp_notion | bool          | char *exp                      | 判断表达式是否有非法符号             |
+  | mathMain   | void       | char* expression | 进程主函数             |
+
+  **部分代码示例**
+
+  ```c
+  int calculate(char* origin_exp)
+  {
+  	/*============ 表达式美化 ============*/
+  	char exp[100] = "\0";
+  	int pos = 0;
+  	for (int i = 0; i < strlen(origin_exp); ++i)
+  	{
+  		if (isOperator(origin_exp[i]))
+  		{
+  			exp[pos] = ' ';
+  			++pos;
+  			exp[pos] = origin_exp[i];
+  			++pos;
+  			exp[pos] = ' ';
+  			++pos;
+  		}
+  		else if (isDigit(origin_exp[i]))
+  		{
+  			exp[pos] = origin_exp[i];
+  			++pos;
+  		}
+  	}
+  
+  
+  
+  	/*初始两个栈*/
+  	num_stack_clear();
+  	op_stack_clear();
+  	_current = 0;
+  
+  	int temp = 0;
+  	/*在表达式尾部添加结束标识符*/
+  	addTail(exp);
+  
+  	op_stack_push('#');
+  	struct Data elem = NextContent(exp);
+  	while (!isempty_op_stack())
+  	{
+  		char ch = elem.data;
+  
+  		if (elem.flag == 1)
+  		{ //如果是操作数, 直接读入下一个内容
+  			
+  			if (temp == 1) {
+  				int a = num_stack_pop();
+  				num_stack_push(a*10+ elem.data);
+  			}
+  			else
+  				num_stack_push(elem.data);
+  			temp = 1;
+  			elem = NextContent(exp);
+  		}
+  		else if (elem.flag == 0)
+  		{ //如果是操作符,判断ch的优先级icp和当前栈顶操作符的优先级isp
+  			temp = 0;
+  			char topch = op_stack_top();
+  			if (isp(topch) < icp(ch))
+  			{ //当前操作符优先级大,将ch压栈,读入下一个内容
+  				op_stack_push(ch);
+  				elem = NextContent(exp);
+  			}
+  			else if (isp(topch) > icp(ch))
+  			{ //当前优先级小,推展并输出到结果中
+  				struct Data buf;
+  				buf.data = op_stack_pop();
+  				buf.flag = 0;
+  
+  				int right = num_stack_pop();
+  				int left = num_stack_pop();
+  				num_stack_push(Cal(left, buf.data, right));
+  			}
+  			else
+  			{
+  				if (op_stack_top() == '(')
+  				{ //如果退出的是左括号则读入下一个内容
+  					elem = NextContent(exp);
+  				}
+  				op_stack_pop();
+  			}
+  		}
+  	}
+  
+  
+  	return num_stack_pop();
+  	
+  }
+  
+  ```
+  
+  
+
 #### 3.2.2 游戏
 
 + **Color Ball**
@@ -769,6 +920,172 @@ void runApp(fd_stdin, fd_stdout)
   
 
 + **五子棋**
+
+     AI实现主要思路：
+
+    首先进行1层深度的行棋模拟，假设这一步由玩家或电脑在每一种的落子完成后，通过估值函数来计算每一种情况的好坏，从所有的情况中选择能导致最好的情况的来走下一步
+
+    检查能形成几连函数
+
+    ```c
+    int check(int x, int y, char player, int mode[2])
+    {
+    	// console.log(x,y,color,maparr[x][y]);
+    	int count = 0;
+    	for (int i = 1; i < 5; i++)
+    	{
+    
+    		if (box[x + i * mode[0]][y + i * mode[1]] == player)
+    		{
+    			count++;
+    		}
+    		else
+    		{
+    			break;
+    		}
+    	}
+    	for (int i = 1; i < 5; i++)
+    	{
+    		if (box[x - i * mode[0]][y - i * mode[1]] == player)
+    		{
+    			count++;
+    		}
+    		else
+    		{
+    			break;
+    		}
+    	}
+    	return count;
+    }
+    ```
+
+    估值函数：
+
+    ```c
+    int computerAI()
+    {
+    	int myScore[15][15];	   //我方分数
+    	int computerScore[15][15]; //计算机分数
+    	int max = 0;			   //最大分数
+    	int u = 0, v = 0;		   //最大分数点
+    	int temp = 0;
+    	for (int i = 0; i < 15; i++)
+    	{
+    
+    		for (int j = 0; j < 15; j++)
+    		{
+    			myScore[i][j] = 0;
+    			computerScore[i][j] = 0;
+    		}
+    	}
+    
+    	for (int i = 0; i < 15; i++)
+    	{
+    		for (int j = 0; j < 15; j++)
+    		{
+    			if (box[i][j] == ChessBoard)
+    			{ //每个空闲点上进行计算分数
+    				temp = 0;
+    				for (int l = 0; l < 4; l++)
+    					if (temp < check(i, j, flag1, mode[l]))
+    						temp = check(i, j, flag1, mode[l]);
+    				if (temp == 1)
+    				{
+    					myScore[i][j] += 200;
+    				}
+    				else if (temp == 2)
+    				{
+    					myScore[i][j] += 400;
+    				}
+    				else if (temp == 3)
+    				{
+    					myScore[i][j] += 2000;
+    				}
+    				else if (temp == 4)
+    				{
+    					myScore[i][j] += 10000;
+    				}
+    				temp = 0;
+    				for (int l = 0; l < 4; l++)
+    					if (temp < check(i, j, flag2, mode[l]))
+    						temp = check(i, j, flag2, mode[l]);
+    				if (temp == 1)
+    				{
+    					computerScore[i][j] += 220;
+    				}
+    				else if (temp == 2)
+    				{
+    					computerScore[i][j] += 420;
+    				}
+    				else if (temp == 3)
+    				{
+    					computerScore[i][j] += 2100;
+    				}
+    				else if (temp == 4)
+    				{
+    					computerScore[i][j] += 20000;
+    				}
+    			}
+    
+    			//得出最大分数的点，并赋给u,v
+    			if (myScore[i][j] > max)
+    			{
+    				max = myScore[i][j];
+    				u = i;
+    				v = j;
+    			}
+    			else if (myScore[i][j] == max)
+    			{
+    				if (computerScore[i][j] > computerScore[u][v])
+    				{
+    					u = i;
+    					v = j;
+    				}
+    			}
+    
+    			if (computerScore[i][j] > max)
+    			{
+    				max = computerScore[i][j];
+    				u = i;
+    				v = j;
+    			}
+    			else if (computerScore[i][j] == max)
+    			{
+    				if (myScore[i][j] > myScore[u][v])
+    				{
+    					u = i;
+    					v = j;
+    				}
+    			}
+    
+    		} //所有空闲点上进行计算分数
+    	}
+    	box[u][v] = flag2;
+    
+    	PrintChessBoard();
+    
+    	for (int l = 0; l < 4; l++)
+    	{
+    		int temp1 = 0;
+    		if (temp1 < check(u, v, flag2, mode[l]))
+    			temp1 = check(u, v, flag2, mode[l]);
+    
+    		if (temp1 >= 4)
+    		{
+    			printf("computer win\n");
+    
+    			over = true;
+    			return 0;
+    		}
+    	}
+    
+    	if (!over)
+    	{
+    		me = !me;
+    		return v;
+    	}
+    }
+    ```
 
 
 
