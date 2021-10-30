@@ -8,12 +8,12 @@
 
 ## 小组成员
 
-+ 1953981 吴昊天
-+ 1954090 刘心宇
++ [Wizard23333](https://github.com/Wizard23333)
++ [MetorSage](https://github.com/MetorSage)
 
-+ 1954091 胡相乾
++ [511tony](https://github.com/511tony)
 
-+ 1953486 王绍杰
++ [wangxiaomie](https://github.com/wangxiaomie)
 
 ## 目录
 
@@ -80,7 +80,7 @@
 
 ### 1.4 小组分工
 
-+ #### 吴昊天
++ #### [Wizard23333](https://github.com/Wizard23333)
 
   + 项目环境搭建
   + 项目仓库建立
@@ -89,7 +89,7 @@
   + 系统引导程序
   + 国际跳棋游戏
 
-+ #### 刘心宇
++ #### [MetorSage](https://github.com/MetorSage)
 
   + 进程管理系统
   + 五子连珠游戏
@@ -97,12 +97,13 @@
   + 项目文档
   + 系统标志设计
 
-+ #### 王绍杰
++ #### [wangxiaomie](https://github.com/wangxiaomie)
+  
   + 经典扫雷游戏
   + 数独游戏
   + 项目文档
-
-+ #### 胡相乾
+  
++ #### [511tony](https://github.com/511tony)
 
   + 四则计算器
   + 五子棋游戏
@@ -1443,8 +1444,3 @@ int computerAI()
 	}
 }
 ```
-
-
-
-
-
